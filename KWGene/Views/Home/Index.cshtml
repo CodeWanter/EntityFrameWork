@@ -9,15 +9,27 @@
     <tbody>
         <tr>
             <th>标题</th>
-            <th>内容</th>
-            <th>创建时间</th>
-            <th>创建人</th>
         </tr>
 
         @foreach (GeneModel.GeneData item in Model)
             {
             <tr>
                 <td>@item.Organization</td>
+            </tr>
+        }
+    </tbody>
+
+</table>
+<table class="table">
+    <tbody>
+        <tr>
+            <th>root</th>
+        </tr>
+
+        @foreach (GeneModel.Log item in ViewBag.Person)
+            {
+            <tr>
+                <td>@item.Problem</td>
             </tr>
         }
     </tbody>

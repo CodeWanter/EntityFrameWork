@@ -13,6 +13,12 @@ namespace GeneDal
 		{
 		}
 	 }
+	public partial class LogDAL : BaseDAL<Log>
+	{
+		public  LogDAL(DbContext entity):base(entity)
+		{
+		}
+	 }
 	public partial class PhoneDAL : BaseDAL<Phone>
 	{
 		public  PhoneDAL(DbContext entity):base(entity)

@@ -26,6 +26,7 @@ namespace GeneBll
         public static void Initialise() {
             var bulider = new ContainerBuilder();
 			            bulider.RegisterType<GeneDataBLL >();
+			            bulider.RegisterType<LogBLL >();
 			            bulider.RegisterType<PhoneBLL >();
 			            bulider.RegisterType<ProductBLL >();
 			            bulider.RegisterType<UserBLL >();
@@ -38,6 +39,13 @@ namespace GeneBll
 		public override void SetCurrentDAL()
 		{
 			CurrentDAL = DbSession.GeneDataDAL;
+		}
+	}
+	public partial class LogBLL : BaseBLL<Log>
+	{
+		public override void SetCurrentDAL()
+		{
+			CurrentDAL = DbSession.LogDAL;
 		}
 	}
 	public partial class PhoneBLL : BaseBLL<Phone>

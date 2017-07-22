@@ -32,6 +32,7 @@
           <EntitySet Name="User" EntityType="KWGENEModel.User" />
           <EntitySet Name="Product" EntityType="KWGENEModel.Product" />
           <EntitySet Name="Phone" EntityType="KWGENEModel.Phone" />
+          <EntitySet Name="Log" EntityType="KWGENEModel.Log" />
         </EntityContainer>
         <EntityType Name="GeneData">
           <Key>
@@ -69,6 +70,14 @@
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Num" Type="String" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Log">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Problem" Type="String" Nullable="false" />
+          <Property Name="CreateTime" Type="DateTime" Nullable="false" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>

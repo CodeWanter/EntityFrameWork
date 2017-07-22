@@ -13,12 +13,14 @@ namespace KWGene.Controllers
         //private readonly NewsBLL newsBll;
         private readonly UserBLL userBll;
         private readonly ProductBLL proBll;
+        private readonly LogBLL logBll;
         public HomeController()
         {
             this.bll = Container.Resolver<GeneDataBLL>();
             //this.newsBll = new NewsBLL(); 
             this.userBll = Container.Resolver<UserBLL>();
             this.proBll = Container.Resolver<ProductBLL>();
+            this.logBll = Container.Resolver<LogBLL>();
         }
         // GET: Home
         public ActionResult Index()
@@ -33,12 +35,19 @@ namespace KWGene.Controllers
                       Organization="万方"
                 },
             };
-
+            
             //userBll.AddEntity(new GeneModel.User()
             //{
             //    Name = "夏乐",
             //});
 
+            logBll.AddEntity(new GeneModel.Log()
+            {
+                Problem="1",
+                CreateTime = DateTime.Now
+            });
+
+            var pp = logBll.GetList(null);
 
             bll.AddList(list);
             //newsBll.AddList(list2);
@@ -49,6 +58,7 @@ namespace KWGene.Controllers
             //var c = bl.GetCountByColumnWithSql("NewsData", "Title", "'zhang'");
             //var cc = newsBll.GetCount(p => true);
             //var dd = newsBll.GetList(null);
+            ViewBag.Person = pp;
             return View(aa);
         }
     }

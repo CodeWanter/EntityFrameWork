@@ -77,6 +77,23 @@ namespace GeneDal
 		}
 	}
 
+	private LogDAL _logDAL;
+	public LogDAL LogDAL
+	{
+		get
+		{
+			if (_logDAL == null)
+			{
+				_logDAL = new LogDAL(entity);
+			}
+			return _logDAL;
+		}
+		set
+		{
+			_logDAL = value;
+		}
+	}
+
 	private PhoneDAL _phoneDAL;
 	public PhoneDAL PhoneDAL
 	{

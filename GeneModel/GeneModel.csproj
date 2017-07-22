@@ -51,6 +51,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Log.cs">
+      <DependentUpon>KWGene.tt</DependentUpon>
+    </Compile>
     <Compile Include="Phone.cs">
       <DependentUpon>KWGene.tt</DependentUpon>
     </Compile>

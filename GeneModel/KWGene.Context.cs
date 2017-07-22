@@ -22,6 +22,7 @@ namespace GeneModel
     
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
+    
     		base.OnModelCreating(modelBuilder);
             //throw new UnintentionalCodeFirstException();
         }
@@ -30,5 +31,6 @@ namespace GeneModel
         public virtual DbSet<User> User { get; set; }
         public virtual DbSet<Product> Product { get; set; }
         public virtual DbSet<Phone> Phone { get; set; }
+        public virtual DbSet<Log> Log { get; set; }
     }
 }

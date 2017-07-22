@@ -6,9 +6,10 @@
     <edmx:Diagrams>
       <Diagram DiagramId="b2f20ee72b3b42b087b4dccb0f243c49" Name="Diagram1">
         <EntityTypeShape EntityType="KWGENEModel.GeneData" Width="1.5" PointX="0.75" PointY="0.75" />
-        <EntityTypeShape EntityType="KWGENEModel.User" Width="1.5" PointX="5.25" PointY="2.125" />
+        <EntityTypeShape EntityType="KWGENEModel.User" Width="1.5" PointX="4.375" PointY="0.75" />
         <EntityTypeShape EntityType="KWGENEModel.Product" Width="1.5" PointX="2.5" PointY="0.75" />
-        <EntityTypeShape EntityType="KWGENEModel.Phone" Width="1.5" PointX="7.625" PointY="1.5" />
+        <EntityTypeShape EntityType="KWGENEModel.Phone" Width="1.5" PointX="6.125" PointY="0.75" />
+        <EntityTypeShape EntityType="KWGENEModel.Log" Width="1.5" PointX="7.125" PointY="2.625" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
