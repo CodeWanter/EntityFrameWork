@@ -17,5 +17,6 @@ namespace GeneModel
         public int Id { get; set; }
         public string Problem { get; set; }
         public System.DateTime CreateTime { get; set; }
+        public int lines { get; set; }
     }
 }

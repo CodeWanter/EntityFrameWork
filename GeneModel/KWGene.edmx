@@ -78,6 +78,7 @@
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Problem" Type="String" Nullable="false" />
           <Property Name="CreateTime" Type="DateTime" Nullable="false" />
+          <Property Name="lines" Type="Int32" Nullable="false" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
