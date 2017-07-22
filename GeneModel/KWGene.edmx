@@ -1,0 +1,117 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="KWGENEModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2012" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="KWGENEModelStoreContainer">
+    <EntitySet Name="GeneData" EntityType="KWGENEModel.Store.GeneData" store:Type="Tables" Schema="dbo" />
+    </EntityContainer>
+  <EntityType Name="GeneData">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Organization" Type="nvarchar" Nullable="true" MaxLength="50" />
+    <Property Name="PatientID" Type="int" Nullable="true" />
+    <Property Name="GeneName" Type="nvarchar" Nullable="true" MaxLength="50" />
+    <Property Name="Hegansuan" Type="nvarchar" Nullable="true" MaxLength="50" />
+    <Property Name="Anjisuan" Type="nvarchar" Nullable="true" MaxLength="50" />
+    <Property Name="Qianrenjiyin" Type="nvarchar" Nullable="true" MaxLength="50" />
+    <Property Name="Tubianweidian" Type="nvarchar" Nullable="true" MaxLength="50" />
+    <Property Name="Chunhe" Type="nvarchar" Nullable="true" MaxLength="50" />
+    <Property Name="Zahe" Type="nvarchar" Nullable="true" MaxLength="50" />
+  </EntityType>
+</Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="KWGENEModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="KWGENEEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="GeneData" EntityType="KWGENEModel.GeneData" />
+          <EntitySet Name="User" EntityType="KWGENEModel.User" />
+          <EntitySet Name="Product" EntityType="KWGENEModel.Product" />
+          <EntitySet Name="Phone" EntityType="KWGENEModel.Phone" />
+        </EntityContainer>
+        <EntityType Name="GeneData">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Organization" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PatientID" Type="Int32" />
+          <Property Name="GeneName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Hegansuan" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Anjisuan" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Qianrenjiyin" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Tubianweidian" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Chunhe" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Zahe" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Product">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" />
+          <Property Name="Type" Type="String" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Phone">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Num" Type="String" Nullable="false" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+    <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="KWGENEModelStoreContainer" CdmEntityContainer="KWGENEEntities">
+    <EntitySetMapping Name="GeneData">
+      <EntityTypeMapping TypeName="IsTypeOf(KWGENEModel.GeneData)">
+        <MappingFragment StoreEntitySet="GeneData">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Organization" ColumnName="Organization" />
+          <ScalarProperty Name="PatientID" ColumnName="PatientID" />
+          <ScalarProperty Name="GeneName" ColumnName="GeneName" />
+          <ScalarProperty Name="Hegansuan" ColumnName="Hegansuan" />
+          <ScalarProperty Name="Anjisuan" ColumnName="Anjisuan" />
+          <ScalarProperty Name="Qianrenjiyin" ColumnName="Qianrenjiyin" />
+          <ScalarProperty Name="Tubianweidian" ColumnName="Tubianweidian" />
+          <ScalarProperty Name="Chunhe" ColumnName="Chunhe" />
+          <ScalarProperty Name="Zahe" ColumnName="Zahe" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping></edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="False" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

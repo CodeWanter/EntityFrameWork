@@ -1,0 +1,74 @@
+﻿<#@ template language="C#" debug="false" hostspecific="true"#> 
+<#@ include file="EF.Utility.CS.ttinclude"#> 
+<#@ output extension=".cs"#> 
+<# 
+CodeGenerationTools code = new CodeGenerationTools(this); 
+MetadataLoader loader = new MetadataLoader(this); 
+CodeRegion region = new CodeRegion(this, 1); 
+MetadataTools ef = new MetadataTools(this); 
+string inputFile = @"../GeneModel/KWGene.edmx";
+EdmItemCollection ItemCollection = loader.CreateEdmItemCollection(inputFile); 
+string namespaceName = code.VsNamespaceSuggestion(); 
+EntityFrameworkTemplateFileManager fileManager = 
+          EntityFrameworkTemplateFileManager.Create(this); 
+#>
+using GeneModel;
+using Autofac;
+
+namespace GeneBll
+{
+ public class Container {
+        public static IContainer container = null;
+
+        public static T Resolver<T>()
+        {
+            try
+            {
+                if (container == null)
+                {
+                    Initialise();
+                }
+            }
+            catch (System.Exception ex) {
+                throw new System.Exception("IOC实例化出错！" + ex.Message);
+            }
+            return container.Resolve<T>();
+        }
+        public static void Initialise() {
+            var bulider = new ContainerBuilder();
+			<#
+	foreach (EntityType entity in ItemCollection.GetItems<EntityType>()
+                                            .OrderBy(e => e.Name)) 
+											{
+											 if (entity.Name.StartsWith("sys") || "batch_temp" == entity.Name)
+        {
+            continue;
+        }
+#>
+            bulider.RegisterType<<#= entity.Name #>BLL >();
+			<#}
+#>
+            container = bulider.Build();
+        }
+        
+    }
+<#
+	foreach (EntityType entity in ItemCollection.GetItems<EntityType>()
+                                            .OrderBy(e => e.Name)) 
+											{
+											 if (entity.Name.StartsWith("sys") || "batch_temp" == entity.Name)
+        {
+            continue;
+        }
+#>
+	public partial class <#= entity.Name #>BLL : BaseBLL<<#= entity.Name #>>
+	{
+		public override void SetCurrentDAL()
+		{
+			CurrentDAL = DbSession.<#= entity.Name #>DAL;
+		}
+	}
+<#}
+#>
+
+}

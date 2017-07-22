@@ -1,0 +1,38 @@
+﻿<#@ template language="C#" debug="false" hostspecific="true"#> 
+<#@ include file="EF.Utility.CS.ttinclude"#> 
+<#@ output extension=".cs"#> 
+<# 
+CodeGenerationTools code = new CodeGenerationTools(this); 
+MetadataLoader loader = new MetadataLoader(this); 
+CodeRegion region = new CodeRegion(this, 1); 
+MetadataTools ef = new MetadataTools(this); 
+string inputFile = @"../GeneModel/KWGene.edmx"; 
+EdmItemCollection ItemCollection = loader.CreateEdmItemCollection(inputFile); 
+string namespaceName = code.VsNamespaceSuggestion(); 
+EntityFrameworkTemplateFileManager fileManager = 
+          EntityFrameworkTemplateFileManager.Create(this); 
+#>
+using System.Data.Entity;
+using GeneModel;
+using System.Data.Entity.Core.Objects;
+
+namespace GeneDal
+{
+<#
+	foreach (EntityType entity in ItemCollection.GetItems<EntityType>()
+                                            .OrderBy(e => e.Name)) 
+											{
+											 if (entity.Name.StartsWith("sys") || "batch_temp" == entity.Name)
+        {
+            continue;
+        }
+#>
+	public partial class <#= entity.Name #>DAL : BaseDAL<<#= entity.Name #>>
+	{
+		public  <#= entity.Name #>DAL(DbContext entity):base(entity)
+		{
+		}
+	 }
+<#}
+#>
+}
