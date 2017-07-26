@@ -5,3 +5,4 @@
 <script src="~/scripts/bootstrap.min.js"></script>
 <h2>欢迎登录系统</h2>
 @Html.ActionLink("查收查引",Url.Content("../Form/Index"))
+@Html.ActionLink("系统管理", "Index", "Default", new { area = "AdminArea" }, new { @class = "login" })

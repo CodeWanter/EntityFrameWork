@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props')" />
   <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
   <Import Project="..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props" Condition="Exists('..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
@@ -24,6 +25,7 @@
     <UseGlobalApplicationHostFile />
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <TypeScriptToolsVersion>1.8</TypeScriptToolsVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -141,18 +143,106 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\fileinput.min.css" />
+    <Content Include="Content\manage\bootstrap\bootstrap-overrides.css" />
+    <Content Include="Content\manage\bootstrap\bootstrap.css" />
+    <Content Include="Content\manage\compiled\calendar.css" />
+    <Content Include="Content\manage\compiled\chart-showcase.css" />
+    <Content Include="Content\manage\compiled\code-editor.css" />
+    <Content Include="Content\manage\compiled\datatables.css" />
+    <Content Include="Content\manage\compiled\elements.css" />
+    <Content Include="Content\manage\compiled\form-showcase.css" />
+    <Content Include="Content\manage\compiled\form-wizard.css" />
+    <Content Include="Content\manage\compiled\gallery.css" />
+    <Content Include="Content\manage\compiled\grids.css" />
+    <Content Include="Content\manage\compiled\icons.css" />
+    <Content Include="Content\manage\compiled\index.css" />
+    <Content Include="Content\manage\compiled\layout.css" />
+    <Content Include="Content\manage\compiled\new-user.css" />
+    <Content Include="Content\manage\compiled\personal-info.css" />
+    <Content Include="Content\manage\compiled\signin.css" />
+    <Content Include="Content\manage\compiled\signup.css" />
+    <Content Include="Content\manage\compiled\skins\dark.css" />
+    <Content Include="Content\manage\compiled\tables.css" />
+    <Content Include="Content\manage\compiled\ui-elements.css" />
+    <Content Include="Content\manage\compiled\user-list.css" />
+    <Content Include="Content\manage\compiled\user-profile.css" />
+    <Content Include="Content\manage\compiled\web-app-icons.css" />
+    <Content Include="Content\manage\lib\bootstrap.datepicker.css" />
+    <Content Include="Content\manage\lib\font-awesome.css" />
+    <Content Include="Content\manage\lib\fullcalendar.css" />
+    <Content Include="Content\manage\lib\fullcalendar.print.css" />
+    <Content Include="Content\manage\lib\jquery-ui-1.10.2.custom.css" />
+    <Content Include="Content\manage\lib\jquery.dataTables.css" />
+    <Content Include="Content\manage\lib\morris.css" />
+    <Content Include="Content\manage\lib\select2.css" />
+    <Content Include="Content\manage\lib\uniform.default.css" />
     <Content Include="Content\Site.css" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
+    <Content Include="Images\manage\btn-attach.png" />
+    <Content Include="Images\manage\btn-setting.png" />
+    <Content Include="Images\manage\btn-shuffle.png" />
+    <Content Include="Images\manage\btn-tool.png" />
+    <Content Include="Images\manage\contact-img.png" />
+    <Content Include="Images\manage\contact-img2.png" />
+    <Content Include="Images\manage\contact-profile.png" />
+    <Content Include="Images\manage\gallery1.jpg" />
+    <Content Include="Images\manage\gallery2.jpg" />
+    <Content Include="Images\manage\gallery3.jpg" />
+    <Content Include="Images\manage\ico-arrow-black.png" />
+    <Content Include="Images\manage\ico-gallery-edit.png" />
+    <Content Include="Images\manage\ico-gallery-trash.png" />
+    <Content Include="Images\manage\ico-mail.png" />
+    <Content Include="Images\manage\ico-phone.png" />
+    <Content Include="Images\manage\ico-table-delete.png" />
+    <Content Include="Images\manage\ico-table-edit.png" />
+    <Content Include="Images\manage\ico-table-new.png" />
+    <Content Include="Images\manage\lens.png" />
+    <Content Include="Images\manage\logo-white.png" />
+    <Content Include="Images\manage\logo.png" />
+    <Content Include="Images\manage\new-gallery-img.png" />
+    <Content Include="Images\manage\no-img-gallery.png" />
+    <Content Include="Images\manage\personal-info.png" />
+    <Content Include="Images\manage\select-bg.png" />
+    <Content Include="Images\manage\skin-nav-bullets.png" />
+    <Content Include="Images\manage\table-img.png" />
     <Content Include="scripts\ai.0.15.0-build58334.js" />
     <Content Include="scripts\ai.0.15.0-build58334.min.js" />
     <Content Include="scripts\bootstrap.js" />
     <Content Include="scripts\bootstrap.min.js" />
+    <Content Include="Areas\AdminArea\Views\web.config" />
+    <Content Include="Areas\AdminArea\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\AdminArea\Views\Shared\_Layout.cshtml" />
+    <Content Include="Areas\AdminArea\Views\Default\Index.cshtml" />
+    <Content Include="fonts\fontawesome-webfont.eot" />
+    <Content Include="fonts\fontawesome-webfont.ttf" />
+    <Content Include="fonts\fontawesome-webfont.woff" />
+    <Content Include="Content\font\fontawesome-webfont.eot" />
+    <Content Include="Content\font\fontawesome-webfont.ttf" />
+    <Content Include="Content\font\fontawesome-webfont.woff" />
     <None Include="Properties\PublishProfiles\website.pubxml" />
     <None Include="scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="scripts\fileinput.min.js" />
     <Content Include="scripts\jquery-1.10.2.js" />
     <Content Include="scripts\jquery-1.10.2.min.js" />
+    <Content Include="scripts\manage\ace\ace.js" />
+    <Content Include="scripts\manage\ace\mode-javascript.js" />
+    <Content Include="scripts\manage\bootstrap.datepicker.js" />
+    <Content Include="scripts\manage\bootstrap.min.js" />
+    <Content Include="scripts\manage\fuelux.wizard.js" />
+    <Content Include="scripts\manage\fullcalendar.min.js" />
+    <Content Include="scripts\manage\jquery-latest.js" />
+    <Content Include="scripts\manage\jquery-ui-1.10.2.custom.min.js" />
+    <Content Include="scripts\manage\jquery.dataTables.js" />
+    <Content Include="scripts\manage\jquery.flot.js" />
+    <Content Include="scripts\manage\jquery.flot.resize.js" />
+    <Content Include="scripts\manage\jquery.flot.stack.js" />
+    <Content Include="scripts\manage\jquery.knob.js" />
+    <Content Include="scripts\manage\jquery.uniform.min.js" />
+    <Content Include="scripts\manage\morris.min.js" />
+    <Content Include="scripts\manage\select2.min.js" />
+    <Content Include="scripts\manage\theme.js" />
+    <Content Include="scripts\manage\wysihtml5-0.3.0.js" />
     <Content Include="scripts\modernizr-2.6.2.js" />
     <Content Include="scripts\zh.js" />
     <Content Include="Web.config" />
@@ -160,8 +250,11 @@
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Areas\AdminArea\AdminAreaAreaRegistration.cs" />
+    <Compile Include="Areas\AdminArea\Controllers\DefaultController.cs" />
     <Compile Include="Controllers\FormController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Filter\RootFilter.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -191,6 +284,13 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Areas\AdminArea\Models\" />
+    <Folder Include="Content\manage\img\jquery-ui\" />
+    <Folder Include="Images\manage\bgs\" />
+    <Folder Include="Images\manage\datatables\" />
+    <Folder Include="Images\manage\jquery-ui\" />
+    <Folder Include="Images\manage\select2\" />
+    <Folder Include="Images\manage\uniform\" />
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
@@ -211,11 +311,15 @@
       <Name>GeneModel</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets')" />
   <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
   <ProjectExtensions>
