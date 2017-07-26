@@ -4,34 +4,4 @@
 <script src="~/scripts/jquery-1.10.2.min.js"></script>
 <script src="~/scripts/bootstrap.min.js"></script>
 <h2>欢迎登录系统</h2>
-
-<table class="table">
-    <tbody>
-        <tr>
-            <th>标题</th>
-        </tr>
-
-        @foreach (GeneModel.GeneData item in Model)
-            {
-            <tr>
-                <td>@item.Organization</td>
-            </tr>
-        }
-    </tbody>
-
-</table>
-<table class="table">
-    <tbody>
-        <tr>
-            <th>root</th>
-        </tr>
-
-        @foreach (GeneModel.Log item in ViewBag.Person)
-            {
-            <tr>
-                <td>@item.Problem</td>
-            </tr>
-        }
-    </tbody>
-
-</table>
+@Html.ActionLink("查收查引",Url.Content("../Form/Index"))

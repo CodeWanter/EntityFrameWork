@@ -7,33 +7,15 @@ using System.Data.Entity.Core.Objects;
 
 namespace GeneDal
 {
-	public partial class GeneDataDAL : BaseDAL<GeneData>
+	public partial class ArticleListDAL : BaseDAL<ArticleList>
 	{
-		public  GeneDataDAL(DbContext entity):base(entity)
+		public  ArticleListDAL(DbContext entity):base(entity)
 		{
 		}
 	 }
-	public partial class LogDAL : BaseDAL<Log>
+	public partial class CheckGuideDAL : BaseDAL<CheckGuide>
 	{
-		public  LogDAL(DbContext entity):base(entity)
-		{
-		}
-	 }
-	public partial class PhoneDAL : BaseDAL<Phone>
-	{
-		public  PhoneDAL(DbContext entity):base(entity)
-		{
-		}
-	 }
-	public partial class ProductDAL : BaseDAL<Product>
-	{
-		public  ProductDAL(DbContext entity):base(entity)
-		{
-		}
-	 }
-	public partial class UserDAL : BaseDAL<User>
-	{
-		public  UserDAL(DbContext entity):base(entity)
+		public  CheckGuideDAL(DbContext entity):base(entity)
 		{
 		}
 	 }

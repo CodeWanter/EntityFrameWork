@@ -5,11 +5,9 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="b2f20ee72b3b42b087b4dccb0f243c49" Name="Diagram1">
-        <EntityTypeShape EntityType="KWGENEModel.GeneData" Width="1.5" PointX="0.75" PointY="0.75" />
-        <EntityTypeShape EntityType="KWGENEModel.User" Width="1.5" PointX="4.375" PointY="0.75" />
-        <EntityTypeShape EntityType="KWGENEModel.Product" Width="1.5" PointX="2.5" PointY="0.75" />
-        <EntityTypeShape EntityType="KWGENEModel.Phone" Width="1.5" PointX="6.125" PointY="0.75" />
-        <EntityTypeShape EntityType="KWGENEModel.Log" Width="1.5" PointX="7.125" PointY="2.625" />
+        <EntityTypeShape EntityType="KWGENEModel.CheckGuide" Width="1.5" PointX="3.375" PointY="0.5" />
+        <EntityTypeShape EntityType="KWGENEModel.ArticleList" Width="1.5" PointX="7.375" PointY="0.625" />
+        <AssociationConnector Association="KWGENEModel.CheckGuideArticleList" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

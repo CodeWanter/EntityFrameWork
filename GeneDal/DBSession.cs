@@ -60,88 +60,37 @@ namespace GeneDal
         {
             return entity.SaveChanges();
         }
-	private GeneDataDAL _genedataDAL;
-	public GeneDataDAL GeneDataDAL
+	private ArticleListDAL _articlelistDAL;
+	public ArticleListDAL ArticleListDAL
 	{
 		get
 		{
-			if (_genedataDAL == null)
+			if (_articlelistDAL == null)
 			{
-				_genedataDAL = new GeneDataDAL(entity);
+				_articlelistDAL = new ArticleListDAL(entity);
 			}
-			return _genedataDAL;
+			return _articlelistDAL;
 		}
 		set
 		{
-			_genedataDAL = value;
+			_articlelistDAL = value;
 		}
 	}
 
-	private LogDAL _logDAL;
-	public LogDAL LogDAL
+	private CheckGuideDAL _checkguideDAL;
+	public CheckGuideDAL CheckGuideDAL
 	{
 		get
 		{
-			if (_logDAL == null)
+			if (_checkguideDAL == null)
 			{
-				_logDAL = new LogDAL(entity);
+				_checkguideDAL = new CheckGuideDAL(entity);
 			}
-			return _logDAL;
+			return _checkguideDAL;
 		}
 		set
 		{
-			_logDAL = value;
-		}
-	}
-
-	private PhoneDAL _phoneDAL;
-	public PhoneDAL PhoneDAL
-	{
-		get
-		{
-			if (_phoneDAL == null)
-			{
-				_phoneDAL = new PhoneDAL(entity);
-			}
-			return _phoneDAL;
-		}
-		set
-		{
-			_phoneDAL = value;
-		}
-	}
-
-	private ProductDAL _productDAL;
-	public ProductDAL ProductDAL
-	{
-		get
-		{
-			if (_productDAL == null)
-			{
-				_productDAL = new ProductDAL(entity);
-			}
-			return _productDAL;
-		}
-		set
-		{
-			_productDAL = value;
-		}
-	}
-
-	private UserDAL _userDAL;
-	public UserDAL UserDAL
-	{
-		get
-		{
-			if (_userDAL == null)
-			{
-				_userDAL = new UserDAL(entity);
-			}
-			return _userDAL;
-		}
-		set
-		{
-			_userDAL = value;
+			_checkguideDAL = value;
 		}
 	}
 

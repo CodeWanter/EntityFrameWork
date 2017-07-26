@@ -12,10 +12,16 @@ namespace GeneModel
     using System;
     using System.Collections.Generic;
     
-    public partial class Product
+    public partial class ArticleList
     {
         public int Id { get; set; }
-        public string Name { get; set; }
-        public string Type { get; set; }
+        public string Title { get; set; }
+        public string FirstAuthor { get; set; }
+        public string Corpartner { get; set; }
+        public string Publisher { get; set; }
+        public string Remark { get; set; }
+        public int CheckGuideId { get; set; }
+    
+        public virtual CheckGuide CheckGuide { get; set; }
     }
 }

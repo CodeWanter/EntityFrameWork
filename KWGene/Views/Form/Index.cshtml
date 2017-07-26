@@ -1,0 +1,163 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+<link href="~/Content/fileinput.min.css" rel="stylesheet" />
+<h2>查收查引</h2>
+<form action="@Url.Content("/Form/CheckGuide")" method="post">
+    <fieldset>
+        <legend>委托人信息</legend>
+        <div class="row">
+            <div class="col-md-3"><label>一卡通帐号：</label></div>
+            <div class="col-md-3"><input name="Account" type="text" required="required" maxlength="200" onblur="GetInfo(this);" /></div>
+            <div class="col-md-3"> <label>院系：</label></div>
+            <div class="col-md-3">
+                <select name="Department" id="Department">
+                    <option value="电子">电子</option>
+                    <option value="医学">医学</option>
+                    <option value="金融">金融</option>
+                </select>
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <div class="col-md-3"><label>邮箱：</label></div>
+            <div class="col-md-3"><input name="Email" type="email" required="required" maxlength="200" id="Email" /></div>
+            <div class="col-md-3"> <label>手机号：</label></div>
+            <div class="col-md-3"><input name="Phone" type="tel" required="required" maxlength="200" id="Phone" /></div>
+        </div>
+        <br />
+        <div class="row">
+            <div class="col-md-3"><label>服务校区：</label></div>
+            <div class="col-md-3">
+                <select name="Campus">
+                    <option value="友谊校区">友谊校区</option>
+                    <option value="长安校区">长安校区</option>
+                </select>
+            </div>
+        </div>
+    </fieldset>
+    <br />
+    <br />
+    <fieldset>
+        <legend>论文清单<a style="font-size:10pt;"><i class="glyphicon-info-sign"></i>模板说明</a></legend>
+        <ul class="nav nav-tabs" >
+            <li class="active"><a href="#tab1" data-toggle="tab">在线填写</a></li>
+            <li><a href="#tab2" data-toggle="tab">统一上传</a></li>
+        </ul>
+        <div class="tab-content">
+            <div id="tab1" class="tab-pane fade in active">
+                <p>
+                    <a data-toggle="modal" href="#example" class="btn btn-primary" data-target="#example">添加</a>
+                </p>
+                <table name="ArticleList" class="table">
+                    <tbody id="tablebody">
+                        <tr>
+                            <th>论文提名</th>
+                            <th>第一作者</th>
+                            <th>合作者</th>
+                            <th>操作</th>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div id="tab2" class="tab-pane fade">
+                <input type="file" id="uploaddoc" name="file" class="file" />
+                <input type="hidden" id="Doc" name="doc" value="" />
+            </div>
+        </div>
+    </fieldset>
+    <br />
+    <br />
+    <fieldset>
+        <legend>付款方式</legend>
+        <div>
+            <label><input type="radio" name="PayType" value="现金收据"  checked="checked"/>现金收据</label>
+            <label><input type="radio" name="PayType" value="校内转账" />校内转账</label>
+        </div>
+        <div></div>
+    </fieldset>
+    <fieldset>
+        <legend></legend>
+        <div><input type="submit" value="提交" class="btn btn-default" /><input type="reset" value="重置" class="btn btn-default" /></div>
+    </fieldset>
+</form>
+<div class="modal fade" id="example" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="myModalLabel">添加论文</h4>
+            </div>
+            <div class="wrap">
+                <div class="in">
+                    论文提名<input type="text" id="Title" maxlength="200" /><br />
+                </div>
+                <div class="in">
+                    第一作者<input type="text" id="FirstAuthor" maxlength="200" /><br />
+                </div>
+                <div class="in">
+                    合作者 <input type="text" id="Corpartner" maxlength="200" /><br />
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <a href="#" class="btn btn-success" onclick="addItems()">提交</a>
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<script src="~/scripts/jquery-1.10.2.min.js"></script>
+<script src="~/scripts/fileinput.min.js"></script>
+<script src="~/scripts/zh.js"></script>
+<script type="text/javascript">
+    $("#uploaddoc").fileinput({
+        language: 'zh',
+        uploadUrl: '/Form/upload',
+        allowedFileExtensions: ['doc', 'docx'],
+        shouUpload: false,
+        showRemove: false,
+        browseClass: 'btn btn-danger',
+        maxFileSize: 5000,
+        maxFileNum: 10,
+        allowedPreviewTypes: null,
+        previewFileIconSettings: {
+            'doc': '<i class="fa fa-file-word-o text-muted"></i>'
+        },
+        previewFileExtSettings: {
+            'doc': function (ext) {
+                return ext.match(/(doc|docx)$/i);
+            }
+        }
+    });
+    $("#uploaddoc").on("fileuploaded", function (event, data) {
+        var res = data.response;
+        $("#Doc").val(res.path);
+    })
+    function addItems() {
+        var title = $("#Title").val();
+        var author = $("#FirstAuthor").val();
+        var partner = $("#Corpartner").val();
+        var count = $("#tablebody tr").length - 1;
+        var strhtml = " <tr>";
+        strhtml += " <td>" + title + "<input type='hidden' value='" + title + "' name='ArticleList[" + count + "].Title' /></td>";
+        strhtml += " <td>" + author + "<input type='hidden' value='" + author + "' name='ArticleList[" + count + "].FirstAuthor' /></td>";
+        strhtml += " <td>" + partner + "<input type='hidden' value='" + partner + "' name='ArticleList[" + count + "].Corpartner'/></td>";
+        strhtml += " <td><div class='btn-group'><a class='edit btn btn-mini' title='修改' href='#'><i class='icon-edit'></i></a><a class='delete btn btn-mini' title='删除' href='#'><i class='icon-trash'></i></a></div></td>";
+        strhtml += "</tr>";
+        $("#tablebody").append(strhtml);
+        $("#example").modal("hide");
+    }
+    //获取个人信息
+    function GetInfo(com) {
+        var account = $(com).val();
+        if (account == '15801255024') {
+            $("#Department").val("金融");
+            $("#Email").val("991446772@qq.com");
+            $("#Phone").val("15801255024");
+        }
+    }
+   
+</script>
