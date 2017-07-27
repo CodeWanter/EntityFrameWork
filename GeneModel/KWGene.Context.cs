@@ -29,5 +29,6 @@ namespace GeneModel
     
         public virtual DbSet<CheckGuide> CheckGuide { get; set; }
         public virtual DbSet<ArticleList> ArticleList { get; set; }
+        public virtual DbSet<UserInfo> UserInfo { get; set; }
     }
 }

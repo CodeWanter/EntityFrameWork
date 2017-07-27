@@ -19,4 +19,10 @@ namespace GeneDal
 		{
 		}
 	 }
+	public partial class UserInfoDAL : BaseDAL<UserInfo>
+	{
+		public  UserInfoDAL(DbContext entity):base(entity)
+		{
+		}
+	 }
 }

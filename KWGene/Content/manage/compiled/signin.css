@@ -1,7 +1,7 @@
 .login-bg {
-  background: url("../../img/bgs/landscape.jpg") no-repeat center center fixed;
-  filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../img/bgs/landscape.jpg', sizingMethod='scale');
-  -ms-filter: "progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../img/bgs/landscape.jpg', sizingMethod='scale')";
+  background: url("../../../../Images/manage/bgs/landscape.jpg") no-repeat center center fixed;
+  filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../../../Images/manage/bgs/landscape.jpg', sizingMethod='scale');
+  -ms-filter: "progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../../../Images/manage/bgs/landscape.jpg', sizingMethod='scale')";
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;

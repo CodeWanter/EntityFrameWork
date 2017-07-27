@@ -94,6 +94,23 @@ namespace GeneDal
 		}
 	}
 
+	private UserInfoDAL _userinfoDAL;
+	public UserInfoDAL UserInfoDAL
+	{
+		get
+		{
+			if (_userinfoDAL == null)
+			{
+				_userinfoDAL = new UserInfoDAL(entity);
+			}
+			return _userinfoDAL;
+		}
+		set
+		{
+			_userinfoDAL = value;
+		}
+	}
+
  private BaseDAL<SqlCommonModel> _CRFSqlCommonDAL;
         public BaseDAL<SqlCommonModel> CRFSqlCommonDAL
         {

@@ -24,7 +24,7 @@
     <!--[if lt IE 9]>
       <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
-
+    @RenderSection("head", required: false)
 </head>
 <body>
     <header class="navbar navbar-inverse" role="banner">
@@ -85,12 +85,13 @@
 
             <li class="dropdown">
                 <a href="#" class="dropdown-toggle hidden-xs hidden-sm" data-toggle="dropdown">
-                    你的账号
+                    @Request.Params["currentUsername"]
                     <b class="caret"></b>
                 </a>
                 <ul class="dropdown-menu">
                     <li><a href="personal-info.html">个人信息</a></li>
                     <li><a href="#">账号设置</a></li>
+                    <li><a href="#">安全退出</a></li>
                 </ul>
             </li>
             <li class="settings hidden-xs hidden-sm">
@@ -99,15 +100,13 @@
                 </a>
             </li>
             <li class="settings hidden-xs hidden-sm">
-                <a href="signin.html" role="button">
+                <a href="/Home/Index" role="button">
                     <i class="icon-share-alt"></i>
                 </a>
             </li>
         </ul>
     </header>
     @RenderBody()
-
-
     <!-- scripts -->
     @*<script src="http://code.jquery.com/jquery-latest.js"></script>*@
     <script src="~/scripts/manage/jquery-latest.js"></script>

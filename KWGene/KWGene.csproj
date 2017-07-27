@@ -220,6 +220,7 @@
     <Content Include="Content\font\fontawesome-webfont.eot" />
     <Content Include="Content\font\fontawesome-webfont.ttf" />
     <Content Include="Content\font\fontawesome-webfont.woff" />
+    <Content Include="Areas\AdminArea\Views\Account\Login.cshtml" />
     <None Include="Properties\PublishProfiles\website.pubxml" />
     <None Include="scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="scripts\fileinput.min.js" />
@@ -229,8 +230,11 @@
     <Content Include="scripts\manage\ace\mode-javascript.js" />
     <Content Include="scripts\manage\bootstrap.datepicker.js" />
     <Content Include="scripts\manage\bootstrap.min.js" />
+    <Content Include="Content\manage\common.css" />
     <Content Include="scripts\manage\fuelux.wizard.js" />
     <Content Include="scripts\manage\fullcalendar.min.js" />
+    <Content Include="scripts\manage\jquery-html5Validate-min.js" />
+    <Content Include="scripts\manage\jquery-html5Validate.js" />
     <Content Include="scripts\manage\jquery-latest.js" />
     <Content Include="scripts\manage\jquery-ui-1.10.2.custom.min.js" />
     <Content Include="scripts\manage\jquery.dataTables.js" />
@@ -239,6 +243,8 @@
     <Content Include="scripts\manage\jquery.flot.stack.js" />
     <Content Include="scripts\manage\jquery.knob.js" />
     <Content Include="scripts\manage\jquery.uniform.min.js" />
+    <Content Include="scripts\manage\jquery.validate.min.js" />
+    <Content Include="scripts\manage\jquery.validate.unobtrusive.min.js" />
     <Content Include="scripts\manage\morris.min.js" />
     <Content Include="scripts\manage\select2.min.js" />
     <Content Include="scripts\manage\theme.js" />
@@ -251,6 +257,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Areas\AdminArea\AdminAreaAreaRegistration.cs" />
+    <Compile Include="Areas\AdminArea\Controllers\AccountController.cs" />
     <Compile Include="Areas\AdminArea\Controllers\DefaultController.cs" />
     <Compile Include="Controllers\FormController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
