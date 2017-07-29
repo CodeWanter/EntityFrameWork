@@ -1,0 +1,127 @@
+﻿<div id="sidebar-nav">
+    <ul id="dashboard-menu">
+        <li class="active">
+            <div class="pointer">
+                <div class="arrow"></div>
+                <div class="arrow_border"></div>
+            </div>
+            <a href="index.html">
+                <i class="icon-home"></i>
+                <span>首页</span>
+            </a>
+        </li>
+        <li>
+            <a class="dropdown-toggle" href="#">
+                <i class="icon-group"></i>
+                <span>用户权限</span>
+                <i class="icon-chevron-down"></i>
+            </a>
+            <ul class="submenu">
+                <li><a href="user-list.html">用户列表</a></li>
+                <li><a href="new-user.html">新用户</a></li>
+            </ul>
+        </li>
+        <li>
+            <a class="dropdown-toggle" href="#">
+                <i class="icon-edit"></i>
+                <span>查收查引</span>
+                <i class="icon-chevron-down"></i>
+            </a>
+            <ul class="submenu">
+                <li><a href="form-showcase.html">待分配订单</a></li>
+                <li><a href="form-wizard.html">待处理订单</a></li>
+                <li><a href="form-wizard.html">已处理订单</a></li>
+                <li><a href="form-wizard.html">待审核订单</a></li>
+                <li><a href="form-wizard.html">已审核订单</a></li>
+            </ul>
+        </li>
+        <li>
+            <a class="dropdown-toggle" href="tables.html">
+                <i class="icon-edit"></i>
+                <span>科技查新</span>
+                <i class="icon-chevron-down"></i>
+            </a>
+            <ul class="submenu">
+                <li><a href="form-showcase.html">待分配订单</a></li>
+                <li><a href="form-wizard.html">待处理订单</a></li>
+                <li><a href="form-wizard.html">已处理订单</a></li>
+                <li><a href="form-wizard.html">待审核订单</a></li>
+                <li><a href="form-wizard.html">已审核订单</a></li>
+            </ul>
+        </li>
+        <li>
+            <a class="dropdown-toggle" href="tables.html">
+                <i class="icon-signal"></i>
+                <span>数据统计</span>
+                <i class="icon-chevron-down"></i>
+            </a>
+            <ul class="submenu">
+                <li><a href="form-showcase.html">订单统计</a></li>
+                <li><a href="form-wizard.html">访问统计</a></li>
+            </ul>
+        </li>
+    </ul>
+</div>
+<div class="content">
+    <!-- settings changer -->
+    <div class="skins-nav">
+        <a href="#" class="skin first_nav selected">
+            <span class="icon"></span><span class="text">默认皮肤</span>
+        </a>
+        <a href="#" class="skin second_nav" data-file="../../Content/manage/compiled/skins/dark.css">
+            <span class="icon"></span><span class="text">深色皮肤</span>
+        </a>
+    </div>
+    <!-- upper main stats -->
+    <div id="main-stats">
+        <div class="row stats-row">
+            <div class="col-md-3 col-sm-3 stat">
+                <div class="data">
+                    <span class="number">2457</span>
+                    访问
+                </div>
+                <span class="date">今天</span>
+            </div>
+            <div class="col-md-3 col-sm-3 stat">
+                <div class="data">
+                    <span class="number">3240</span>
+                    用户
+                </div>
+                <span class="date">2013年11月</span>
+            </div>
+            <div class="col-md-3 col-sm-3 stat">
+                <div class="data">
+                    <span class="number">322</span>
+                    订单
+                </div>
+                <span class="date">本周</span>
+            </div>
+            <div class="col-md-3 col-sm-3 stat last">
+                <div class="data">
+                    <span class="number">$2,340</span>
+                    销售金额
+                </div>
+                <span class="date">最近30天</span>
+            </div>
+        </div>
+    </div>
+    <!-- end upper main stats -->
+    <div id="pad-wrapper">
+        <!-- statistics chart built with jQuery Flot -->
+        <div class="row chart">
+            <div class="col-md-12">
+                <h4 class="clearfix">
+                    订单统计
+                    <div class="btn-group pull-right">
+                        <button class="glow left">日</button>
+                        <button class="glow middle active">月</button>
+                        <button class="glow right">年</button>
+                    </div>
+                </h4>
+            </div>
+            <div class="col-md-12">
+                <div id="statsChart"></div>
+            </div>
+        </div>
+    </div>
+</div>

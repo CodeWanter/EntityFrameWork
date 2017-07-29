@@ -12,17 +12,16 @@ namespace GeneModel
     using System;
     using System.Collections.Generic;
     
-    public partial class GeneData
+    public partial class ArticleList
     {
-        public int ID { get; set; }
-        public string Organization { get; set; }
-        public Nullable<int> PatientID { get; set; }
-        public string GeneName { get; set; }
-        public string Hegansuan { get; set; }
-        public string Anjisuan { get; set; }
-        public string Qianrenjiyin { get; set; }
-        public string Tubianweidian { get; set; }
-        public string Chunhe { get; set; }
-        public string Zahe { get; set; }
+        public int Id { get; set; }
+        public string Title { get; set; }
+        public string FirstAuthor { get; set; }
+        public string Corpartner { get; set; }
+        public string Publisher { get; set; }
+        public string Remark { get; set; }
+        public int CheckGuideId { get; set; }
+    
+        public virtual CheckGuide CheckGuide { get; set; }
     }
 }

@@ -6,120 +6,81 @@
     <edmx:StorageModels>
     <Schema Namespace="KWGENEModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2012" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
   <EntityContainer Name="KWGENEModelStoreContainer">
-    <EntitySet Name="GeneData" EntityType="KWGENEModel.Store.GeneData" store:Type="Tables" Schema="dbo" />
     </EntityContainer>
-  <EntityType Name="GeneData">
-    <Key>
-      <PropertyRef Name="ID" />
-    </Key>
-    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="Organization" Type="nvarchar" Nullable="true" MaxLength="50" />
-    <Property Name="PatientID" Type="int" Nullable="true" />
-    <Property Name="GeneName" Type="nvarchar" Nullable="true" MaxLength="50" />
-    <Property Name="Hegansuan" Type="nvarchar" Nullable="true" MaxLength="50" />
-    <Property Name="Anjisuan" Type="nvarchar" Nullable="true" MaxLength="50" />
-    <Property Name="Qianrenjiyin" Type="nvarchar" Nullable="true" MaxLength="50" />
-    <Property Name="Tubianweidian" Type="nvarchar" Nullable="true" MaxLength="50" />
-    <Property Name="Chunhe" Type="nvarchar" Nullable="true" MaxLength="50" />
-    <Property Name="Zahe" Type="nvarchar" Nullable="true" MaxLength="50" />
-  </EntityType>
 </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="KWGENEModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="KWGENEEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="GeneData" EntityType="KWGENEModel.GeneData" />
-          <EntitySet Name="User" EntityType="KWGENEModel.WF_User" />
-          <EntitySet Name="WF_Role" EntityType="KWGENEModel.WF_Role" />
-          <AssociationSet Name="WF_RoleWF_User" Association="KWGENEModel.WF_RoleWF_User">
-            <End Role="WF_Role" EntitySet="WF_Role" />
-            <End Role="WF_User" EntitySet="User" />
+          <EntitySet Name="CheckGuide" EntityType="KWGENEModel.CheckGuide" />
+          <EntitySet Name="ArticleList" EntityType="KWGENEModel.ArticleList" />
+          <AssociationSet Name="CheckGuideArticleList" Association="KWGENEModel.CheckGuideArticleList">
+            <End Role="CheckGuide" EntitySet="CheckGuide" />
+            <End Role="ArticleList" EntitySet="ArticleList" />
           </AssociationSet>
+          <EntitySet Name="UserInfo" EntityType="KWGENEModel.UserInfo" />
         </EntityContainer>
-        <EntityType Name="GeneData">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Organization" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="PatientID" Type="Int32" />
-          <Property Name="GeneName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Hegansuan" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Anjisuan" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Qianrenjiyin" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Tubianweidian" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Chunhe" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Zahe" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-        </EntityType>
-        <EntityType Name="WF_User">
+        <EntityType Name="CheckGuide">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" Nullable="false" />
-          <Property Name="UserName" Type="String" Nullable="false" />
-          <Property Name="Password" Type="String" Nullable="false" />
-          <NavigationProperty Name="RoleId" Relationship="KWGENEModel.WF_RoleWF_User" FromRole="WF_User" ToRole="WF_Role" />
-          <Property Name="WF_RoleId" Type="Int32" Nullable="false" />
-          <Property Name="CreateTime" Type="DateTime" Nullable="false" />
+          <Property Name="Account" Type="String" Nullable="false" MaxLength="Max" >
+            <Documentation>
+              <Summary>账号</Summary>
+              <LongDescription>账号</LongDescription>
+            </Documentation>
+          </Property>
+          <Property Name="Department" Type="String" Nullable="false" />
+          <Property Name="Campus" Type="String" Nullable="false" Unicode="true" />
+          <NavigationProperty Name="ArticleList" Relationship="KWGENEModel.CheckGuideArticleList" FromRole="CheckGuide" ToRole="ArticleList" />
+          <Property Name="Email" Type="String" Nullable="false" />
+          <Property Name="Phone" Type="String" Nullable="false" />
+          <Property Name="PayType" Type="String" Nullable="false" />
+          <Property Name="Doc" Type="String" Nullable="false" />
         </EntityType>
-        <EntityType Name="WF_Role">
+        <EntityType Name="ArticleList">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="RoleName" Type="String" Nullable="false" />
-          <Property Name="RoleRoot" Nullable="false" Type="String" />
-          <NavigationProperty Name="UserList" Relationship="KWGENEModel.WF_RoleWF_User" FromRole="WF_Role" ToRole="WF_User" />
-          <Property Name="CreataTime" Type="DateTime" Nullable="false" />
+          <Property Name="Title" Type="String" Nullable="false" />
+          <Property Name="FirstAuthor" Type="String" Nullable="false" />
+          <Property Name="Corpartner" Type="String" Nullable="false" />
+          <Property Name="Publisher" Type="String" Nullable="false" />
+          <Property Name="Remark" Type="String" Nullable="false" />
+          <NavigationProperty Name="CheckGuide" Relationship="KWGENEModel.CheckGuideArticleList" FromRole="ArticleList" ToRole="CheckGuide" />
+          <Property Name="CheckGuideId" Type="Int32" Nullable="false" />
         </EntityType>
-        <Association Name="WF_RoleWF_User">
-          <End Type="KWGENEModel.WF_Role" Role="WF_Role" Multiplicity="1" />
-          <End Type="KWGENEModel.WF_User" Role="WF_User" Multiplicity="*" />
+        <Association Name="CheckGuideArticleList">
+          <End Type="KWGENEModel.CheckGuide" Role="CheckGuide" Multiplicity="1" />
+          <End Type="KWGENEModel.ArticleList" Role="ArticleList" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="WF_Role">
+            <Principal Role="CheckGuide">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="WF_User">
-              <PropertyRef Name="WF_RoleId" />
+            <Dependent Role="ArticleList">
+              <PropertyRef Name="CheckGuideId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EnumType Name="EnmuPermission">
-          <Member Name="AccountManage_User" Value="101" />
-          <Member Name="AccountManage_Role" Value="102" />
-          <Member Name="COrderManage" Value="201" />
-          <Member Name="CNewOrder" Value="202" />
-          <Member Name="CDealOrder" Value="203" />
-          <Member Name="TOrderManage" Value="301" />
-          <Member Name="TNewOrder" Value="302" />
-          <Member Name="TDealOrder" Value="303" />
-          <Member Name="StaticManage" Value="401" />
-          <Member Name="AccessStatic" Value="402" />
-          <Member Name="OrderStatic" Value="403" />
-        </EnumType>
+        <EntityType Name="UserInfo">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserName" Type="String" Nullable="false" />
+          <Property Name="Password" Type="String" Nullable="false" />
+          <Property Name="Role" Type="String" Nullable="false" />
+          <Property Name="Root" Type="String" Nullable="false" />
+          <Property Name="Createtime" Type="DateTime" Nullable="false" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
     <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
   <EntityContainerMapping StorageEntityContainer="KWGENEModelStoreContainer" CdmEntityContainer="KWGENEEntities">
-    <EntitySetMapping Name="GeneData">
-      <EntityTypeMapping TypeName="IsTypeOf(KWGENEModel.GeneData)">
-        <MappingFragment StoreEntitySet="GeneData">
-          <ScalarProperty Name="ID" ColumnName="ID" />
-          <ScalarProperty Name="Organization" ColumnName="Organization" />
-          <ScalarProperty Name="PatientID" ColumnName="PatientID" />
-          <ScalarProperty Name="GeneName" ColumnName="GeneName" />
-          <ScalarProperty Name="Hegansuan" ColumnName="Hegansuan" />
-          <ScalarProperty Name="Anjisuan" ColumnName="Anjisuan" />
-          <ScalarProperty Name="Qianrenjiyin" ColumnName="Qianrenjiyin" />
-          <ScalarProperty Name="Tubianweidian" ColumnName="Tubianweidian" />
-          <ScalarProperty Name="Chunhe" ColumnName="Chunhe" />
-          <ScalarProperty Name="Zahe" ColumnName="Zahe" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping></edmx:Mappings>
   </edmx:Runtime>

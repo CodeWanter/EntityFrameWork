@@ -27,8 +27,8 @@ namespace GeneModel
             //throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<GeneData> GeneData { get; set; }
-        public virtual DbSet<WF_User> User { get; set; }
-        public virtual DbSet<WF_Role> WF_Role { get; set; }
+        public virtual DbSet<CheckGuide> CheckGuide { get; set; }
+        public virtual DbSet<ArticleList> ArticleList { get; set; }
+        public virtual DbSet<UserInfo> UserInfo { get; set; }
     }
 }

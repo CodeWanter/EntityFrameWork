@@ -25,48 +25,32 @@ namespace GeneBll
         }
         public static void Initialise() {
             var bulider = new ContainerBuilder();
-			            bulider.RegisterType<GeneDataBLL >();
-			            bulider.RegisterType<LogBLL >();
-			            bulider.RegisterType<PhoneBLL >();
-			            bulider.RegisterType<ProductBLL >();
-			            bulider.RegisterType<UserBLL >();
+			            bulider.RegisterType<ArticleListBLL >();
+			            bulider.RegisterType<CheckGuideBLL >();
+			            bulider.RegisterType<UserInfoBLL >();
 			            container = bulider.Build();
         }
         
     }
-	public partial class GeneDataBLL : BaseBLL<GeneData>
+	public partial class ArticleListBLL : BaseBLL<ArticleList>
 	{
 		public override void SetCurrentDAL()
 		{
-			CurrentDAL = DbSession.GeneDataDAL;
+			CurrentDAL = DbSession.ArticleListDAL;
 		}
 	}
-	public partial class LogBLL : BaseBLL<Log>
+	public partial class CheckGuideBLL : BaseBLL<CheckGuide>
 	{
 		public override void SetCurrentDAL()
 		{
-			CurrentDAL = DbSession.LogDAL;
+			CurrentDAL = DbSession.CheckGuideDAL;
 		}
 	}
-	public partial class PhoneBLL : BaseBLL<Phone>
+	public partial class UserInfoBLL : BaseBLL<UserInfo>
 	{
 		public override void SetCurrentDAL()
 		{
-			CurrentDAL = DbSession.PhoneDAL;
-		}
-	}
-	public partial class ProductBLL : BaseBLL<Product>
-	{
-		public override void SetCurrentDAL()
-		{
-			CurrentDAL = DbSession.ProductDAL;
-		}
-	}
-	public partial class UserBLL : BaseBLL<User>
-	{
-		public override void SetCurrentDAL()
-		{
-			CurrentDAL = DbSession.UserDAL;
+			CurrentDAL = DbSession.UserInfoDAL;
 		}
 	}
 

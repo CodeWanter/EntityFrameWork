@@ -12,20 +12,24 @@ namespace GeneModel
     using System;
     using System.Collections.Generic;
     
-    public partial class WF_Role
+    public partial class CheckGuide
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public WF_Role()
+        public CheckGuide()
         {
-            this.UserList = new HashSet<WF_User>();
+            this.ArticleList = new HashSet<ArticleList>();
         }
     
         public int Id { get; set; }
-        public string RoleName { get; set; }
-        public string RoleRoot { get; set; }
-        public System.DateTime CreataTime { get; set; }
+        public string Account { get; set; }
+        public string Department { get; set; }
+        public string Campus { get; set; }
+        public string Email { get; set; }
+        public string Phone { get; set; }
+        public string PayType { get; set; }
+        public string Doc { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<WF_User> UserList { get; set; }
+        public virtual ICollection<ArticleList> ArticleList { get; set; }
     }
 }
