@@ -12,9 +12,15 @@ namespace GeneModel
     using System;
     using System.Collections.Generic;
     
-    public partial class Phone
+    public partial class WF_User
     {
         public int Id { get; set; }
-        public string Num { get; set; }
+        public string Name { get; set; }
+        public string UserName { get; set; }
+        public string Password { get; set; }
+        public int WF_RoleId { get; set; }
+        public System.DateTime CreateTime { get; set; }
+    
+        public virtual WF_Role RoleId { get; set; }
     }
 }

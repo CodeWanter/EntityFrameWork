@@ -10,12 +10,19 @@
 namespace GeneModel
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class Product
+    public enum EnmuPermission : int
     {
-        public int Id { get; set; }
-        public string Name { get; set; }
-        public string Type { get; set; }
+        AccountManage_User = 101,
+        AccountManage_Role = 102,
+        COrderManage = 201,
+        CNewOrder = 202,
+        CDealOrder = 203,
+        TOrderManage = 301,
+        TNewOrder = 302,
+        TDealOrder = 303,
+        StaticManage = 401,
+        AccessStatic = 402,
+        OrderStatic = 403
     }
 }

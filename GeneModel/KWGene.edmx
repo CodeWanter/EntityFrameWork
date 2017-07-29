@@ -29,10 +29,12 @@
       <Schema Namespace="KWGENEModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="KWGENEEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="GeneData" EntityType="KWGENEModel.GeneData" />
-          <EntitySet Name="User" EntityType="KWGENEModel.User" />
-          <EntitySet Name="Product" EntityType="KWGENEModel.Product" />
-          <EntitySet Name="Phone" EntityType="KWGENEModel.Phone" />
-          <EntitySet Name="Log" EntityType="KWGENEModel.Log" />
+          <EntitySet Name="User" EntityType="KWGENEModel.WF_User" />
+          <EntitySet Name="WF_Role" EntityType="KWGENEModel.WF_Role" />
+          <AssociationSet Name="WF_RoleWF_User" Association="KWGENEModel.WF_RoleWF_User">
+            <End Role="WF_Role" EntitySet="WF_Role" />
+            <End Role="WF_User" EntitySet="User" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="GeneData">
           <Key>
@@ -49,37 +51,53 @@
           <Property Name="Chunhe" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Zahe" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
-        <EntityType Name="User">
+        <EntityType Name="WF_User">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" Nullable="false" />
-        </EntityType>
-        <EntityType Name="Product">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" Nullable="false" />
-          <Property Name="Type" Type="String" Nullable="false" />
-        </EntityType>
-        <EntityType Name="Phone">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Num" Type="String" Nullable="false" />
-        </EntityType>
-        <EntityType Name="Log">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Problem" Type="String" Nullable="false" />
+          <Property Name="UserName" Type="String" Nullable="false" />
+          <Property Name="Password" Type="String" Nullable="false" />
+          <NavigationProperty Name="RoleId" Relationship="KWGENEModel.WF_RoleWF_User" FromRole="WF_User" ToRole="WF_Role" />
+          <Property Name="WF_RoleId" Type="Int32" Nullable="false" />
           <Property Name="CreateTime" Type="DateTime" Nullable="false" />
-          <Property Name="lines" Type="Int32" Nullable="false" />
         </EntityType>
+        <EntityType Name="WF_Role">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RoleName" Type="String" Nullable="false" />
+          <Property Name="RoleRoot" Nullable="false" Type="String" />
+          <NavigationProperty Name="UserList" Relationship="KWGENEModel.WF_RoleWF_User" FromRole="WF_Role" ToRole="WF_User" />
+          <Property Name="CreataTime" Type="DateTime" Nullable="false" />
+        </EntityType>
+        <Association Name="WF_RoleWF_User">
+          <End Type="KWGENEModel.WF_Role" Role="WF_Role" Multiplicity="1" />
+          <End Type="KWGENEModel.WF_User" Role="WF_User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="WF_Role">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="WF_User">
+              <PropertyRef Name="WF_RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EnumType Name="EnmuPermission">
+          <Member Name="AccountManage_User" Value="101" />
+          <Member Name="AccountManage_Role" Value="102" />
+          <Member Name="COrderManage" Value="201" />
+          <Member Name="CNewOrder" Value="202" />
+          <Member Name="CDealOrder" Value="203" />
+          <Member Name="TOrderManage" Value="301" />
+          <Member Name="TNewOrder" Value="302" />
+          <Member Name="TDealOrder" Value="303" />
+          <Member Name="StaticManage" Value="401" />
+          <Member Name="AccessStatic" Value="402" />
+          <Member Name="OrderStatic" Value="403" />
+        </EnumType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->

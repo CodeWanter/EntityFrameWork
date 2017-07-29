@@ -28,9 +28,7 @@ namespace GeneModel
         }
     
         public virtual DbSet<GeneData> GeneData { get; set; }
-        public virtual DbSet<User> User { get; set; }
-        public virtual DbSet<Product> Product { get; set; }
-        public virtual DbSet<Phone> Phone { get; set; }
-        public virtual DbSet<Log> Log { get; set; }
+        public virtual DbSet<WF_User> User { get; set; }
+        public virtual DbSet<WF_Role> WF_Role { get; set; }
     }
 }
