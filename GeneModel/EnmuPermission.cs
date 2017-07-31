@@ -10,17 +10,19 @@
 namespace GeneModel
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class Phone
+    public enum EnmuPermission : int
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public WF_Role()
-        {
-            this.UserList = new HashSet<WF_User>();
-        }
-    
-        public int Id { get; set; }
-        public string Num { get; set; }
+        AccountManage_User = 101,
+        AccountManage_Role = 102,
+        COrderManage = 201,
+        CNewOrder = 202,
+        CDealOrder = 203,
+        TOrderManage = 301,
+        TNewOrder = 302,
+        TDealOrder = 303,
+        StaticManage = 401,
+        AccessStatic = 402,
+        OrderStatic = 403
     }
 }
