@@ -57,6 +57,12 @@
     <Compile Include="CheckGuide.cs">
       <DependentUpon>KWGene.tt</DependentUpon>
     </Compile>
+    <Compile Include="MenuDetail.cs">
+      <DependentUpon>KWGene.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MenuInfo.cs">
+      <DependentUpon>KWGene.tt</DependentUpon>
+    </Compile>
     <Compile Include="SqlCommonModel.cs" />
     <Compile Include="KWGene.Context.cs">
       <AutoGen>True</AutoGen>

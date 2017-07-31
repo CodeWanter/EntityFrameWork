@@ -222,8 +222,10 @@
     <Content Include="Content\font\fontawesome-webfont.ttf" />
     <Content Include="Content\font\fontawesome-webfont.woff" />
     <Content Include="Areas\AdminArea\Views\Account\Login.cshtml" />
+    <Content Include="Areas\AdminArea\Views\Default\UserList.cshtml" />
     <None Include="Properties\PublishProfiles\website.pubxml" />
     <None Include="scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="scripts\fileinput.js" />
     <Content Include="scripts\fileinput.min.js" />
     <Content Include="scripts\jquery-1.10.2.js" />
     <Content Include="scripts\jquery-1.10.2.min.js" />

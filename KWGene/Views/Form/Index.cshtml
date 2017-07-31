@@ -3,8 +3,9 @@
     ViewBag.Title = "Index";
 }
 <link href="~/Content/fileinput.min.css" rel="stylesheet" />
+
 <h2>查收查引</h2>
-<form action="@Url.Content("/Form/CheckGuide")" method="post">
+<form action="@Url.Content("/Form/CheckGuide")" method="post" id="defaultform" name="defaultform">
     <fieldset>
         <legend>委托人信息</legend>
         <div class="row">
@@ -41,7 +42,7 @@
     <br />
     <fieldset>
         <legend>论文清单<a style="font-size:10pt;"><i class="glyphicon-info-sign"></i>模板说明</a></legend>
-        <ul class="nav nav-tabs" >
+        <ul class="nav nav-tabs">
             <li class="active"><a href="#tab1" data-toggle="tab">在线填写</a></li>
             <li><a href="#tab2" data-toggle="tab">统一上传</a></li>
         </ul>
@@ -62,7 +63,7 @@
                 </table>
             </div>
             <div id="tab2" class="tab-pane fade">
-                <input type="file" id="uploaddoc" name="file" class="file" />
+                <input type="file" id="uploaddoc" name="file" class="" multiple />
                 <input type="hidden" id="Doc" name="doc" value="" />
             </div>
         </div>
@@ -72,10 +73,18 @@
     <fieldset>
         <legend>付款方式</legend>
         <div>
-            <label><input type="radio" name="PayType" value="现金收据"  checked="checked"/>现金收据</label>
+            <label><input type="radio" name="PayType" value="现金收据" checked="checked" />现金收据</label>
             <label><input type="radio" name="PayType" value="校内转账" />校内转账</label>
         </div>
         <div></div>
+    </fieldset>
+    <fieldset>
+        <legend></legend>
+        <label for="Code">验证码：</label>
+        <input class="easyui-validatebox" type="text" id="Code" name="Code" maxlength="4" data-options="required:true,validType:'length[1,20]'" />
+        <img src="/Form/CheckCode?ID=1" id="imgCode" alt="单击可刷新" onclick="ClickRemoveChangeCode()" />
+        <a href="javascript:void(0)" onclick="ClickRemoveChangeCode();return false;">看不清，换一张</a>
+        <span></span>
     </fieldset>
     <fieldset>
         <legend></legend>
@@ -109,55 +118,145 @@
     </div>
     <!-- /.modal-dialog -->
 </div>
-<script src="~/scripts/jquery-1.10.2.min.js"></script>
-<script src="~/scripts/fileinput.min.js"></script>
-<script src="~/scripts/zh.js"></script>
-<script type="text/javascript">
-    $("#uploaddoc").fileinput({
-        language: 'zh',
-        uploadUrl: '/Form/upload',
-        allowedFileExtensions: ['doc', 'docx'],
-        shouUpload: false,
-        showRemove: false,
-        browseClass: 'btn btn-danger',
-        maxFileSize: 5000,
-        maxFileNum: 10,
-        allowedPreviewTypes: null,
-        previewFileIconSettings: {
-            'doc': '<i class="fa fa-file-word-o text-muted"></i>'
-        },
-        previewFileExtSettings: {
-            'doc': function (ext) {
-                return ext.match(/(doc|docx)$/i);
+@section script{
+    <script src="~/scripts/fileinput.js"></script>
+    <script src="~/scripts/zh.js"></script>
+    <script src="~/scripts/manage/jquery.validate.min.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            //单击重新改变验证码
+            $("#defaultform").validate({
+                errorPlacement: function (error, element) {
+                    var p = $("<p />").append(error);
+                    error.appendTo(element.siblings("span"));
+                },
+                success: function (label) {
+                    //label.addClass("checked").text("s");
+                    //label.parent().addClass("checked");
+                    label.addClass("checked").text(" Ok!")
+                },
+                rules: {
+                    Code: {
+                        required: true,
+                        minlength: 4,
+                        maxlength: 4,
+                        remote: {
+                            type: "post",
+                            url: "/Form/ValidateCode",
+                            data: {
+                                Code: function () {
+                                    return $("#Code").val();
+                                }
+                            },
+                            dataType: "html",
+                            dataFilter: function (data, type) {
+                                if (data == "True") {
+                                    return true;
+                                }
+                                else {
+                                    ClickRemoveChangeCode();
+                                    return false;
+                                }
+                            }
+                        }
+                    }
+                },
+                messages: {
+                    Code: {
+                        required: "请输入验证码",
+                        minlength: "用户名长度不能小于4个字符",
+                        maxlength: "用户名长度不能大于4个字符",
+                        remote: "验证码错误"
+                    }
+                }
+            });
+        });
+        //单击重新改变验证码
+        function ClickRemoveChangeCode() {
+            var code = $("#imgCode").attr("src");
+            $("#imgCode").attr("src", code + "1");
+        }
+        $("#uploaddoc").fileinput({
+            language: 'zh',
+            uploadUrl: '/Form/upload',
+            allowedFileExtensions: ['doc', 'docx'],
+            shouUpload: false,
+            showRemove: false,
+            browseClass: 'btn btn-danger',
+            maxFileSize: 5000,
+            maxFileNum: 10,
+            allowedPreviewTypes: null,
+            previewFileIconSettings: {
+                'doc': '<i class="fa fa-file-word-o text-muted"></i>'
+            },
+            previewFileExtSettings: {
+                'doc': function (ext) {
+                    return ext.match(/(doc|docx)$/i);
+                }
+            }
+        });
+        var List = new Array();
+        //上传 - 删除
+        $('#uploaddoc').on('filesuccessremove', function (event, key) {
+            var abort = true;
+            if (confirm("确定要删除已上传的文件吗？")) {
+                abort = false;
+            }
+            var index1;
+            $.each(List, function (index, item) {
+                if (item.KeyID == key) {
+                    index1 = index;
+                    $.post("/Form/uploaddelete", { key: item.KeyID, path: item.path });
+                }
+            });
+            List.splice(index1, 1);
+            var path = "";
+            $.each(List, function (index, item) {
+                path += item.path;
+            });
+            $("#Doc").val(path);
+        });
+        //取消上传事件
+        $('#uploaddoc').on('filecleared', function (event, files) {
+            $.each(List, function (index, item) {
+                $.post("/Form/uploaddelete", { key: "all", path: item.path });
+            });
+            List = new Array();
+            $("#Doc").val("");
+        });
+
+        //上传 - 成功
+        $("#uploaddoc").on("fileuploaded", function (event, data, previewId, index) {
+            var form = data.form, files = data.files, extra = data.extra,
+             response = data.response, reader = data.reader;
+            List.push({ path: response.path, KeyID: previewId })
+            $("#Doc").val($("#Doc").val() + response.path);
+            //$("#Doc").val(List);
+        });
+
+        function addItems() {
+            var title = $("#Title").val();
+            var author = $("#FirstAuthor").val();
+            var partner = $("#Corpartner").val();
+            var count = $("#tablebody tr").length - 1;
+            var strhtml = " <tr>";
+            strhtml += " <td>" + title + "<input type='hidden' value='" + title + "' name='ArticleList[" + count + "].Title' /></td>";
+            strhtml += " <td>" + author + "<input type='hidden' value='" + author + "' name='ArticleList[" + count + "].FirstAuthor' /></td>";
+            strhtml += " <td>" + partner + "<input type='hidden' value='" + partner + "' name='ArticleList[" + count + "].Corpartner'/></td>";
+            strhtml += " <td><div class='btn-group'><a class='edit btn btn-mini' title='修改' href='#'><i class='icon-edit'></i></a><a class='delete btn btn-mini' title='删除' href='#'><i class='icon-trash'></i></a></div></td>";
+            strhtml += "</tr>";
+            $("#tablebody").append(strhtml);
+            $("#example").modal("hide");
+        }
+        //获取个人信息
+        function GetInfo(com) {
+            var account = $(com).val();
+            if (account == '15801255024') {
+                $("#Department").val("金融");
+                $("#Email").val("991446772@qq.com");
+                $("#Phone").val("15801255024");
             }
         }
-    });
-    $("#uploaddoc").on("fileuploaded", function (event, data) {
-        var res = data.response;
-        $("#Doc").val(res.path);
-    })
-    function addItems() {
-        var title = $("#Title").val();
-        var author = $("#FirstAuthor").val();
-        var partner = $("#Corpartner").val();
-        var count = $("#tablebody tr").length - 1;
-        var strhtml = " <tr>";
-        strhtml += " <td>" + title + "<input type='hidden' value='" + title + "' name='ArticleList[" + count + "].Title' /></td>";
-        strhtml += " <td>" + author + "<input type='hidden' value='" + author + "' name='ArticleList[" + count + "].FirstAuthor' /></td>";
-        strhtml += " <td>" + partner + "<input type='hidden' value='" + partner + "' name='ArticleList[" + count + "].Corpartner'/></td>";
-        strhtml += " <td><div class='btn-group'><a class='edit btn btn-mini' title='修改' href='#'><i class='icon-edit'></i></a><a class='delete btn btn-mini' title='删除' href='#'><i class='icon-trash'></i></a></div></td>";
-        strhtml += "</tr>";
-        $("#tablebody").append(strhtml);
-        $("#example").modal("hide");
-    }
-    //获取个人信息
-    function GetInfo(com) {
-        var account = $(com).val();
-        if (account == '15801255024') {
-            $("#Department").val("金融");
-            $("#Email").val("991446772@qq.com");
-            $("#Phone").val("15801255024");
-        }
-    }
-   
-</script>
+
+    </script>
+}

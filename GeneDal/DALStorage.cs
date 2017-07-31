@@ -19,6 +19,18 @@ namespace GeneDal
 		{
 		}
 	 }
+	public partial class MenuDetailDAL : BaseDAL<MenuDetail>
+	{
+		public  MenuDetailDAL(DbContext entity):base(entity)
+		{
+		}
+	 }
+	public partial class MenuInfoDAL : BaseDAL<MenuInfo>
+	{
+		public  MenuInfoDAL(DbContext entity):base(entity)
+		{
+		}
+	 }
 	public partial class UserInfoDAL : BaseDAL<UserInfo>
 	{
 		public  UserInfoDAL(DbContext entity):base(entity)

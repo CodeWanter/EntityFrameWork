@@ -5,10 +5,14 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="b2f20ee72b3b42b087b4dccb0f243c49" Name="Diagram1">
-        <EntityTypeShape EntityType="KWGENEModel.CheckGuide" Width="1.5" PointX="5.25" PointY="0.5" />
-        <EntityTypeShape EntityType="KWGENEModel.ArticleList" Width="1.5" PointX="7.375" PointY="0.5" />
+        <EntityTypeShape EntityType="KWGENEModel.CheckGuide" Width="1.5" PointX="0.75" PointY="3.375" />
+        <EntityTypeShape EntityType="KWGENEModel.ArticleList" Width="1.5" PointX="3.25" PointY="3.5" />
         <AssociationConnector Association="KWGENEModel.CheckGuideArticleList" />
-        <EntityTypeShape EntityType="KWGENEModel.UserInfo" Width="1.5" PointX="1.25" PointY="0.625" />
+        <EntityTypeShape EntityType="KWGENEModel.UserInfo" Width="1.5" PointX="0.75" PointY="0.5" />
+        <EntityTypeShape EntityType="KWGENEModel.MenuInfo" Width="1.5" PointX="3.25" PointY="0.625" FillColor="255, 192, 192" />
+        <EntityTypeShape EntityType="KWGENEModel.MenuDetail" Width="1.5" PointX="5.75" PointY="0.625" FillColor="255, 224, 192" />
+        <AssociationConnector Association="KWGENEModel.MenuInfoMenuDetail" />
+        <AssociationConnector Association="KWGENEModel.UserInfoMenuInfo" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

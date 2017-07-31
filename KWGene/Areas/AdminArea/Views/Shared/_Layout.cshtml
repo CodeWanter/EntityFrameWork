@@ -106,9 +106,76 @@
             </li>
         </ul>
     </header>
-    @RenderBody()
+    <div id="sidebar-nav">
+        <ul id="dashboard-menu">
+            <li class="active">
+                <div class="pointer">
+                    <div class="arrow"></div>
+                    <div class="arrow_border"></div>
+                </div>
+                <a href="index.html">
+                    <i class="icon-home"></i>
+                    <span>首页</span>
+                </a>
+            </li>
+
+            <li>
+                <a class="dropdown-toggle" href="#">
+                    <i class="icon-group"></i>
+                    <span>用户权限</span>
+                    <i class="icon-chevron-down"></i>
+                </a>
+                <ul class="submenu">
+                   <li>@Html.ActionLink("用户列表", "UserList", "Default", new { area = "AdminArea" }, new { @class = "active" }) </li>
+                    <li><a href="new-user.html">新用户</a></li>
+                </ul>
+            </li>
+            @*<li>
+                    <a class="dropdown-toggle" href="#">
+                        <i class="icon-edit"></i>
+                        <span>查收查引</span>
+                        <i class="icon-chevron-down"></i>
+                    </a>
+                    <ul class="submenu">
+                        <li><a href="form-showcase.html">待分配订单</a></li>
+                        <li><a href="form-wizard.html">待处理订单</a></li>
+                        <li><a href="form-wizard.html">已处理订单</a></li>
+                        <li><a href="form-wizard.html">待审核订单</a></li>
+                        <li><a href="form-wizard.html">已审核订单</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a class="dropdown-toggle" href="tables.html">
+                        <i class="icon-edit"></i>
+                        <span>科技查新</span>
+                        <i class="icon-chevron-down"></i>
+                    </a>
+                    <ul class="submenu">
+                        <li><a href="form-showcase.html">待分配订单</a></li>
+                        <li><a href="form-wizard.html">待处理订单</a></li>
+                        <li><a href="form-wizard.html">已处理订单</a></li>
+                        <li><a href="form-wizard.html">待审核订单</a></li>
+                        <li><a href="form-wizard.html">已审核订单</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a class="dropdown-toggle" href="tables.html">
+                        <i class="icon-signal"></i>
+                        <span>数据统计</span>
+                        <i class="icon-chevron-down"></i>
+                    </a>
+                    <ul class="submenu">
+                        <li><a href="form-showcase.html">订单统计</a></li>
+                        <li><a href="form-wizard.html">访问统计</a></li>
+                    </ul>
+                </li>*@
+        </ul>
+    </div>
+    <div class="content">
+        @RenderBody()
+        
+    </div>
     <!-- scripts -->
-    @*<script src="http://code.jquery.com/jquery-latest.js"></script>*@
     <script src="~/scripts/manage/jquery-latest.js"></script>
     <script src="~/scripts/manage/bootstrap.min.js"></script>
     <script src="~/scripts/manage/jquery-ui-1.10.2.custom.min.js"></script>
@@ -119,9 +186,28 @@
     <script src="~/scripts/manage/jquery.flot.stack.js"></script>
     <script src="~/scripts/manage/jquery.flot.resize.js"></script>
     <script src="~/scripts/manage/theme.js"></script>
+    @RenderSection("script", required: false)
     <script type="text/javascript">
         $(function () {
-
+            $.post("/Default/LoadMenuData", {}, function (data) {
+                var strMenuItemHTMl = "";
+                for (var i = 0; i < data.length; i++) {
+                    strMenuItemHTMl += "<li>";
+                    var strMenuItemHTMl = "<a class=\"dropdown-toggle\" href=\"tables.html\"><i class=\"icon-edit\"></i>";
+                    var groupInfo = data[i]; //拿到组的信息
+                    strMenuItemHTMl += "<span>" + groupInfo.MenuName + "</span>";
+                    strMenuItemHTMl += "<i class=\"icon-chevron-down\"></i></a>";
+                    strMenuItemHTMl += " <ul class=\"submenu\">";
+                    //拿到内容的信息,每个菜单项构造成一个p标签
+                    for (var j = 0; j < groupInfo.MenuInfo.length; j++) {
+                        var menuItem = groupInfo.MenuInfo[j];
+                        strMenuItemHTMl += '<li><a href="javascript:void(0)" src="' + menuItem.SubUrl + '" class="menuLink">' + menuItem.SubName + '</a></li>';
+                    }
+                    strMenuItemHTMl += "</ul>";
+                }
+                strMenuItemHTMl += "</li>";
+                $("#dashboard-menu").append(strMenuItemHTMl);
+            });
             // jQuery Knobs
             $(".knob").knob();
 
