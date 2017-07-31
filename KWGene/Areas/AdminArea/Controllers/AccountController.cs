@@ -30,17 +30,24 @@ namespace KWGene.Areas.AdminArea.Controllers
             //userBll.AddEntity(model);
             return View();
         }
-        [HttpPost]
-        public ActionResult Login(string userName,string psw)
+
+        /// <summary>
+        /// 验证用户名密码
+        /// </summary>
+        /// <param name="username">用户名</param>
+        /// <returns></returns>
+        public int denglu(string username, string password)
         {
-            UserInfo model = userBll.GetEntity(p => p.UserName == userName && p.Password == psw);
-            if (model!=null)
+            UserInfo model = userBll.GetEntity(p => p.UserName == username && p.Password == password);
+            if (model != null)
             {
                 Session["userID"] = model.Id;
-               
-                return RedirectToAction("Index", "Default",new { area = "AdminArea" , currentUsername = userName });
+                return 1;
             }
-            return RedirectToAction("Login", "Account", new { area = "AdminArea" });
+            else
+            {
+                return 2;
+            }
         }
     }
 }

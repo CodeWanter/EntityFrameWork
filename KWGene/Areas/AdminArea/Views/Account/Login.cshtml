@@ -27,10 +27,20 @@
     <!-- open sans font -->
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
 
+
     <!--[if lt IE 9]>
       <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
+    <style type="text/css">
+        .ps{
+            position: absolute;
+            color: red;
+            font-size: small;
+            margin-left: 10px;
+        }
+    </style>
 </head>
+
 <body>
     <!-- background switcher -->
     <div class="bg-switch visible-desktop">
@@ -67,20 +77,66 @@
         <div class="box">
             <div class="content-wrap">
                 <h6>登录</h6>
-                <form action="/Account/Login" method="post" name="LoginForm" id="LoginForm">
-                    <input class="form-control" type="text" placeholder="用户名"  onkeyup="var reg = /^[\d\_a-zA-Z]+$/;if(!reg.test(this.value)) this.value='';" name="UserName" required="required" id="UserName">
-                    <div class="ps"></div>
-                    <input class="form-control" type="password" placeholder="密码" name="psw" id="psw"  required="required">
-                    <div class="ps"></div>
-                    <input type="submit" class="btn-glow primary login" value="登录" />
-                </form>
+                @*<form action="/Account/Login" method="post" name="LoginForm" id="LoginForm">*@
+                    <label for="rusername"></label>
+                    <input class="form-control" type="text" placeholder="用户名" onkeyup="var reg = /^[\d\_a-zA-Z]+$/;if(!reg.test(this.value)) this.value='';" name="rusername" required="required" id="rusername">
+                    <div id="lh" class="ps"></div>
+                    <label for="rpassword"></label>
+                    <input class="form-control" type="password" placeholder="密码" name="rpassword" id="rpassword" required="required">
+                    <div id="2h" class="ps"></div>
+                    <input type="button" class="btn-glow primary login" style="margin-top:10px;" onclick="dl()" value="登录" />
+                @*</form>*@
             </div>
         </div>
     </div>
+
     <script src="~/scripts/manage/jquery-latest.js"></script>
     <script src="~/scripts/manage/bootstrap.min.js"></script>
     <script src="~/scripts/manage/theme.js"></script>
-    <script src="~/scripts/manage/jquery-html5Validate-min.js"></script>
+    <script src="~/scripts/validate/jquery.min.js"></script>
+    <script src="~/scripts/validate/jquery.validate.min.js"></script>
+    <script type="text/javascript">
+
+        //登陆验证
+        function dl() {
+            var username = $("#rusername").val();
+            var password = $("#rpassword").val();
+            if (username == "" || username == null) {
+                $("#lh").text("用户名不能为空!");
+            }
+            else if (password == "" || password == null) {
+                $("#lh").text("");
+                $("#2h").text("密码不能为空!");
+            }
+            else {
+                $("#1h").text("");
+                $("#2h").text("");
+                $.ajax({
+                    type: "post",
+                    url: "/Account/denglu",
+                    data: { "username": username, "password": password },
+                    success: function (data) {
+                        if (data == "1") {
+                            $("#1h").text("");
+                            $("#2h").text("");
+                            window.location.href = '/AdminArea/Default/Index';
+                        }
+                        else if (data == "2") {
+                            $("#1h").text("");
+                            $("#2h").text("账号密码错误！");
+                            return;
+                        }
+                        else {
+                            $("#1h").text("");
+                            $("#2h").text("");
+                            alert("系统错误！");
+                            //window.location.reload();  
+                        }
+                    }
+                })
+            }
+        }      
+    </script>
     <!-- pre load bg imgs -->
     <script type="text/javascript">
         $(function () {
@@ -91,34 +147,15 @@
                 $btns.removeClass("active");
                 $(this).addClass("active");
                 var bg = $(this).data("img");
-
                 $("html").css("background-image", "url('../../../Images/manage/bgs/" + bg + "')");
             });
-
-            //$("#LoginForm").html5Validate({
-                //errorPlacement: function (error, element) {
-                //    var p = $("<p />").append(error);
-                //    error.appendTo(element.next("div"));
-                //},
-                //success: function (label) {
-                //},
-                //rules: {
-                //    UserName: "required",
-                //    psw: {
-                //        required: true,
-                //        minlength: 5
-                //    }
-                //},
-                //messages: {
-                //    UserName: "* 用户名不能为空",
-                //    psw: {
-                //        required: "* 请输入密码",
-                //        minlength: "* 密码不能小于{0}个字 符"
-                //    }
-                //}
-            //});
         });
+
     </script>
+
+
+
+
 </body>
 </html>
 

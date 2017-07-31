@@ -86,6 +86,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data.Entity" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
@@ -250,6 +251,8 @@
     <Content Include="scripts\manage\theme.js" />
     <Content Include="scripts\manage\wysihtml5-0.3.0.js" />
     <Content Include="scripts\modernizr-2.6.2.js" />
+    <Content Include="scripts\validate\jquery.min.js" />
+    <Content Include="scripts\validate\jquery.validate.min.js" />
     <Content Include="scripts\zh.js" />
     <Content Include="Web.config" />
   </ItemGroup>
