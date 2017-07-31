@@ -12,22 +12,22 @@ namespace GeneModel
     using System;
     using System.Collections.Generic;
     
-    public partial class UserInfo
+    public partial class MenuInfo
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public UserInfo()
+        public MenuInfo()
         {
-            this.MenuInfo = new HashSet<MenuInfo>();
+            this.MenuDetail = new HashSet<MenuDetail>();
+            this.UserInfo = new HashSet<UserInfo>();
         }
     
         public int Id { get; set; }
-        public string UserName { get; set; }
-        public string Password { get; set; }
-        public string Role { get; set; }
-        public string Root { get; set; }
-        public System.DateTime Createtime { get; set; }
+        public string MenuName { get; set; }
+        public int UserInfoId { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<MenuInfo> MenuInfo { get; set; }
+        public virtual ICollection<MenuDetail> MenuDetail { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<UserInfo> UserInfo { get; set; }
     }
 }

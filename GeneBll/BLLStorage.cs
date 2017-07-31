@@ -27,6 +27,8 @@ namespace GeneBll
             var bulider = new ContainerBuilder();
 			            bulider.RegisterType<ArticleListBLL >();
 			            bulider.RegisterType<CheckGuideBLL >();
+			            bulider.RegisterType<MenuDetailBLL >();
+			            bulider.RegisterType<MenuInfoBLL >();
 			            bulider.RegisterType<UserInfoBLL >();
 			            container = bulider.Build();
         }
@@ -44,6 +46,20 @@ namespace GeneBll
 		public override void SetCurrentDAL()
 		{
 			CurrentDAL = DbSession.CheckGuideDAL;
+		}
+	}
+	public partial class MenuDetailBLL : BaseBLL<MenuDetail>
+	{
+		public override void SetCurrentDAL()
+		{
+			CurrentDAL = DbSession.MenuDetailDAL;
+		}
+	}
+	public partial class MenuInfoBLL : BaseBLL<MenuInfo>
+	{
+		public override void SetCurrentDAL()
+		{
+			CurrentDAL = DbSession.MenuInfoDAL;
 		}
 	}
 	public partial class UserInfoBLL : BaseBLL<UserInfo>

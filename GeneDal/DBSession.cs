@@ -94,6 +94,40 @@ namespace GeneDal
 		}
 	}
 
+	private MenuDetailDAL _menudetailDAL;
+	public MenuDetailDAL MenuDetailDAL
+	{
+		get
+		{
+			if (_menudetailDAL == null)
+			{
+				_menudetailDAL = new MenuDetailDAL(entity);
+			}
+			return _menudetailDAL;
+		}
+		set
+		{
+			_menudetailDAL = value;
+		}
+	}
+
+	private MenuInfoDAL _menuinfoDAL;
+	public MenuInfoDAL MenuInfoDAL
+	{
+		get
+		{
+			if (_menuinfoDAL == null)
+			{
+				_menuinfoDAL = new MenuInfoDAL(entity);
+			}
+			return _menuinfoDAL;
+		}
+		set
+		{
+			_menuinfoDAL = value;
+		}
+	}
+
 	private UserInfoDAL _userinfoDAL;
 	public UserInfoDAL UserInfoDAL
 	{

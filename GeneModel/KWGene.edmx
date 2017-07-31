@@ -19,6 +19,16 @@
             <End Role="ArticleList" EntitySet="ArticleList" />
           </AssociationSet>
           <EntitySet Name="UserInfo" EntityType="KWGENEModel.UserInfo" />
+          <EntitySet Name="MenuInfo" EntityType="KWGENEModel.MenuInfo" />
+          <EntitySet Name="MenuDetail" EntityType="KWGENEModel.MenuDetail" />
+          <AssociationSet Name="MenuInfoMenuDetail" Association="KWGENEModel.MenuInfoMenuDetail">
+            <End EntitySet="MenuInfo" Role="MenuInfo" />
+            <End EntitySet="MenuDetail" Role="MenuDetail" />
+          </AssociationSet>
+          <AssociationSet Name="UserInfoMenuInfo" Association="KWGENEModel.UserInfoMenuInfo">
+            <End Role="UserInfo" EntitySet="UserInfo" />
+            <End Role="MenuInfo" EntitySet="MenuInfo" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="CheckGuide">
           <Key>
@@ -74,7 +84,44 @@
           <Property Name="Role" Type="String" Nullable="false" />
           <Property Name="Root" Type="String" Nullable="false" />
           <Property Name="Createtime" Type="DateTime" Nullable="false" />
+          <NavigationProperty Name="MenuInfo" Relationship="KWGENEModel.UserInfoMenuInfo" FromRole="UserInfo" ToRole="MenuInfo" />
         </EntityType>
+        <EntityType Name="MenuInfo">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MenuName" Type="String" Nullable="false" />
+          <Property Name="UserInfoId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="MenuDetail" Relationship="KWGENEModel.MenuInfoMenuDetail" FromRole="MenuInfo" ToRole="MenuDetail" />
+          <NavigationProperty Name="UserInfo" Relationship="KWGENEModel.UserInfoMenuInfo" FromRole="MenuInfo" ToRole="UserInfo" />
+        </EntityType>
+        <EntityType Name="MenuDetail">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SubName" Type="String" Nullable="false" />
+          <Property Name="SubUrl" Type="String" Nullable="false" />
+          <NavigationProperty Name="MenuInfo" Relationship="KWGENEModel.MenuInfoMenuDetail" FromRole="MenuDetail" ToRole="MenuInfo" />
+          <Property Name="MenuInfoId" Type="Int32" Nullable="false" />
+        </EntityType>
+        <Association Name="MenuInfoMenuDetail">
+          <End Type="KWGENEModel.MenuInfo" Multiplicity="1" Role="MenuInfo" />
+          <End Type="KWGENEModel.MenuDetail" Multiplicity="*" Role="MenuDetail" />
+          <ReferentialConstraint>
+            <Principal Role="MenuInfo">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="MenuDetail">
+              <PropertyRef Name="MenuInfoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="UserInfoMenuInfo">
+          <End Type="KWGENEModel.UserInfo" Role="UserInfo" Multiplicity="*" />
+          <End Type="KWGENEModel.MenuInfo" Role="MenuInfo" Multiplicity="*" />
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
