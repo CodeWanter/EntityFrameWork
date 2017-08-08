@@ -1,0 +1,152 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <link href="~/Content/manage/admin.css" rel="stylesheet" />
+    <link href="~/scripts/manage/artDialog-5.0.4/skins/default.css" rel="stylesheet" />
+    <title>用户信息</title>
+</head>
+<body style="width: 95%; margin-left: 2%; background: #FFFFFF url('../../../Images/manage/bodyBg.jpg') no-repeat right;">
+    <div>
+        <div class="SY201112_TB0_title" style="margin-bottom: 10px;"><span>用户信息</span></div>
+        <form id="UserForm">
+            <table style="width: 760px; text-align: left;" border="1">
+                <tr>
+                    <td colspan="2">
+                        <div style="text-align: center">
+                            <span class="span">
+                                <span style="color:#666666">
+                                    <span style="color:#999999">温馨提示：为了能您的信息能正常提交，请如实填好带"<span style="color:#ff6600">*</span>" 号 的部分</span>
+                                </span>
+                            </span>
+                        </div>
+                    </td>
+                </tr>
+                <tr style="background-color:#ffffff">
+                    <td style="text-align:center;background-color:#d2eaff;height:30px;">
+                        <div style="text-align:right">用户名：</div>
+                        <input id="Hidden1" type="hidden" name="Id" value="@Model.Id" />
+                        <input id="Hidden2" type="hidden" name="Createtime" value="@Model.Createtime" />
+                    </td>
+                    <td style="background-color:#eef7ff">
+                        @if (Model.Id != 0)
+                        {
+                            <input style="width:300px" maxlength="40" size="40" name="UserName" value="@Model.UserName" readonly="readonly">
+
+                        }
+                        else
+                        {
+                            <input style="width:300px" maxlength="40" size="40" name="UserName" value="@Model.UserName">
+                            <span class="span"><span style="color:#666666"><span style="color:#999999"><span style="color:#ff6600">*请填写用户名</span></span></span></span>
+                        }
+                    </td>
+                </tr>
+                <tr style="background-color:#ffffff">
+                    <td style="text-align:center;background-color:#d2eaff;height:30px;">
+                        <div style="text-align:right">姓名：</div>
+                    </td>
+                    <td style="background-color:#eef7ff">
+                        <input style="width:300px" maxlength="40" size="40" name="TrueName" value="@Model.TrueName">
+                        <span class="span"><span style="color:#666666"><span style="color:#999999"><span style="color:#ff6600">*请填昵称</span></span></span></span>
+                    </td>
+                </tr>
+                <tr style="background-color:#ffffff">
+                    <td style="text-align:center;background-color:#d2eaff;height:30px;">
+                        <div style="text-align:right">校区：</div>
+                    </td>
+                    <td style="background-color:#eef7ff">
+                        <select name="Campus">
+                            @if (Model.Campus == "友谊校区")
+                            {
+                                <option value="友谊校区" name="Campus" selected>友谊校区</option>
+
+                            }
+                            else
+                            {
+                                <option value="友谊校区" name="Campus">友谊校区</option>
+
+                            }
+                            @if (Model.Campus == "长安校区")
+                            {
+                                <option value="长安校区" name="Campus" selected>长安校区</option>
+
+                            }
+                            else
+                            {
+                                <option value="长安校区" name="Campus">长安校区</option>
+
+                            }
+                            @if (Model.Campus == "其他校区")
+                            {
+                                <option value="其他校区" name="Campus" selected>其他校区</option>
+
+                            }
+                            else
+                            {
+                                <option value="其他校区" name="Campus">其他校区</option>
+
+                            }
+                        </select>
+                    </td>
+                </tr>
+                <tr style="background-color:#ffffff">
+                    <td style="text-align:center;background-color:#d2eaff;height:30px;">
+                        <div style="text-align:right">密码：</div>
+                    </td>
+                    <td style="background-color:#eef7ff">
+                        <input style="width:300px" maxlength="40" size="40" name="Password" value="@Model.Password" type="password">
+                        <span class="span"><span style="color:#666666"><span style="color:#999999"><span style="color:#ff6600">*请填写密码</span></span></span></span>
+                    </td>
+                </tr>
+                <tr style="background-color:#ffffff">
+                    <td style="text-align:center;background-color:#d2eaff;height:30px;">
+                        <div style="text-align:right">用户权限：</div>
+                    </td>
+                    <td style="background-color:#eef7ff">
+                        @foreach (var item in ViewBag.Roles as List<GeneModel.WF_Role>)
+                        {
+                            if (Model.WF_RoleId != item.Id)
+                            {
+                                <input id="Radio1" type="radio" name="WF_RoleId" value="@item.Id" />@item.RoleName
+
+                            }
+                            else
+                            {
+                                <input id="Radio1" type="radio" name="WF_RoleId" value="@item.Id" checked="checked" />@item.RoleName
+                            }
+
+                        }
+
+                    </td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>
+                        <input id="Submit1" type="submit" value="保存" />&nbsp;
+                        <input id="Button1" type="button" value="返回" onclick="location.href = '/AdminArea/Account/UserManage'" />
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
+</body>
+</html>
+<script src="~/scripts/jquery-1.10.2.min.js"></script>
+<script src="~/scripts/manage/artDialog-5.0.4/source/artDialog.js"></script>
+<script type="text/javascript">
+    function showMsg(data) {
+        art.dialog({
+            content: data
+        });
+    }
+
+    $('#Submit1').click(function () {
+        var data = $('#UserForm').serialize();
+        $.post("/Account/SaveUser", data, function (data) {
+            showMsg(data);
+        });
+    });
+</script>

@@ -1,5 +1,6 @@
 ﻿using GeneBll;
 using GeneModel;
+using KWGene.Filter;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -11,46 +12,50 @@ namespace KWGene.Areas.AdminArea.Controllers
 {
     public class DefaultController : Controller
     {
-        private readonly UserInfoBLL userBll;
-        private readonly MenuInfoBLL menuBll;
-        private readonly MenuDetailBLL menudBll;
+        private readonly WF_UserBLL userBll;
+        private readonly WF_RoleBLL roleBll;
+        private readonly WF_MenuBLL menuBll;
+        private readonly RoleToMenusBLL rtBll;
 
         public DefaultController()
         {
-            userBll = Container.Resolver<UserInfoBLL>();
-            menuBll = Container.Resolver<MenuInfoBLL>();
-            menudBll = Container.Resolver<MenuDetailBLL>();
+            roleBll = Container.Resolver<WF_RoleBLL>();
+            userBll = Container.Resolver<WF_UserBLL>();
+            menuBll = Container.Resolver<WF_MenuBLL>();
+            rtBll = Container.Resolver<RoleToMenusBLL>();
         }
         // GET: AdminArea/Home
         public ActionResult Index()
         {
-   
+            List<WF_Menu> list = new List<WF_Menu>();
+
             if (Session["userID"] != null)
             {
                 int Userid = Int32.Parse(Session["userID"].ToString());
-                UserInfo model = userBll.GetEntity(p => p.Id == Userid);
-                ViewBag.Role = model.Role;
-                List<string> root = model.Root.Split('|').ToList();
-                ViewBag.root = root;
+                WF_User model = userBll.GetEntity(p => p.Id == Userid);
+                List<RoleToMenus> role = rtBll.GetList(m => m.WF_RoleId == model.WF_RoleId);
+                role = role.OrderBy(p => p.WF_MenuId).ToList<RoleToMenus>();
+                foreach (RoleToMenus item in role)
+                {
+                    WF_Menu menu = item.WF_Menu;
+                    if (menu.PId != 0)
+                    {
+                        WF_Menu submenu = menuBll.GetEntity(m => m.Id == menu.PId);
+                        submenu.SubList.Add(menu);
+                    }
+                }
+                foreach (RoleToMenus item in role)
+                {
+                    WF_Menu menu = item.WF_Menu;
+                    if (menu.PId == 0)
+                    {
+                        list.Add(menu);
+                    }
+                }
+                ViewBag.Role = model.WF_Role.RoleName;
+                ViewBag.UserName = model.TrueName;
             }
-            return View();
-        }
-
-        public ActionResult UserList()
-        {
-            return View();
-        }
-
-        /// <summary>
-        /// 查询出数据显示在菜单栏目中
-        /// </summary>
-        /// <returns></returns>
-        public JsonResult LoadMenuData()
-        {
-            int Userid = Int32.Parse(Session["userID"].ToString());
-
-            List<MenuInfo> data = menuBll.GetList(p => p.UserInfoId == Userid);
-            return Json(data, JsonRequestBehavior.AllowGet);
+            return View(list);
         }
     }
 }

@@ -1,0 +1,43 @@
+﻿@{
+    Layout = null;
+}
+<link href="~/Content/manage/bootstrap/bootstrap.css" rel="stylesheet" />
+
+<script src="~/scripts/jquery-1.10.2.min.js"></script>
+<script src="~/scripts/manage/artDialog-5.0.4/source/artDialog.js"></script>
+<script src="~/scripts/bootstrap.min.js"></script>
+<div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h4 class="modal-title" id="myModalLabelh">角色组信息</h4>
+        </div>
+        <div class="wrap">
+            <div class="in">
+                <span>角色组名称：</span>
+                <input name="RoleName" value="@Model.RoleName" placeholder="请输入旧密码"><span></span><p id="l1h"></p>
+            </div>
+            <div class="in">
+                <span>说明：</span>
+                <input name="Introduce" value="@Model.Introduce" placeholder="说明"><span></span><p id="l2h"></p>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" id="Submit1" class="btn btn-primary">提交更改</button>
+            <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    function showMsg(data) {
+        art.dialog({
+            content: data
+        });
+    }
+
+    $('#Submit1').click(function () {
+        var data = $('#UpdateRole').serialize();
+        $.post("/Account/UpdateRole", data, function (data) {
+            showMsg(data);
+        });
+    });
+</script>

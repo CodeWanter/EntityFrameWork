@@ -1,0 +1,81 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <link href="~/Content/manage/admin.css" rel="stylesheet" />
+    <link href="~/scripts/manage/artDialog-5.0.4/skins/default.css" rel="stylesheet" />
+    <script src="~/scripts/jquery-1.10.2.min.js"></script>
+    <title>角色组信息</title>
+</head>
+<body style="width: 95%; margin-left: 2%; background: #FFFFFF url('../../../Images/manage/bodyBg.jpg') no-repeat right;">
+    <div>
+        <div class="SY201112_TB0_title" style="margin-bottom: 10px;"><span>角色组信息</span></div>
+        <form id="UpdateRole">
+            <table style="width: 760px; text-align: left;" border="1">
+                <tr>
+                    <td colspan="2">
+                        <div style="text-align: center">
+                            <span class="span">
+                                <span style="color:#666666">
+                                    <span style="color:#999999">温馨提示：为了能您的信息能正常提交，请如实填好带"<span style="color:#ff6600">*</span>" 号 的部分</span>
+                                </span>
+                            </span>
+                        </div>
+                    </td>
+                </tr>
+                <tr style="background-color:#ffffff">
+                    <td style="text-align:center;background-color:#d2eaff;height:30px;">
+                        <div style="text-align:right">角色组名称：</div>
+                        <input id="Hidden1" type="hidden" name="Id" value="@Model.Id" />
+                    </td>
+                    <td style="background-color:#eef7ff">
+                        <input style="width:300px" maxlength="40" size="40" name="RoleName" value="@Model.RoleName">
+                        <span class="span"><span style="color:#666666"><span style="color:#999999"><span style="color:#ff6600">*请填写角色组名称</span></span></span></span>
+                    </td>
+                </tr>
+                <tr style="background-color:#ffffff">
+                    <td style="text-align:center;background-color:#d2eaff;height:30px;">
+                        <div style="text-align:right">说明：</div>
+                    </td>
+                    <td style="background-color:#eef7ff">
+                        <input style="width:300px" maxlength="40" size="40" name="Introduce" value="@Model.Introduce">
+                    </td>
+                </tr>
+                <tr style="background-color:#ffffff">
+                    <td style="text-align:center;background-color:#d2eaff;height:30px;">
+                        <div style="text-align:right">权重：</div>
+                    </td>
+                    <td style="background-color:#eef7ff">
+                        <input type="number"  style="width:300px"  min = "0" max = "100" step="1" name="weight" value="@Model.weight">
+                    </td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>
+                        <input id="Submit1" type="submit" value="保存" />&nbsp;
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
+</body>
+</html>
+<script src="~/scripts/jquery-1.10.2.min.js"></script>
+<script src="~/scripts/manage/artDialog-5.0.4/source/artDialog.js"></script>
+<script type="text/javascript">
+    function showMsg(data) {
+        art.dialog({
+            content: data
+        });
+    }
+
+    $('#Submit1').click(function () {
+        var data = $('#UpdateRole').serialize();
+        $.post("/Account/UpdateRole", data, function (data) {
+            showMsg(data);
+        });
+    });
+</script>

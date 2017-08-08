@@ -1,61 +1,324 @@
-﻿<!-- settings changer -->
-<div class="skins-nav">
-    <a href="#" class="skin first_nav selected">
-        <span class="icon"></span><span class="text">默认皮肤</span>
-    </a>
-    <a href="#" class="skin second_nav" data-file="../../Content/manage/compiled/skins/dark.css">
-        <span class="icon"></span><span class="text">深色皮肤</span>
-    </a>
-</div>
-<!-- upper main stats -->
-<div id="main-stats">
-    <div class="row stats-row">
-        <div class="col-md-3 col-sm-3 stat">
-            <div class="data">
-                <span class="number">2457</span>
-                访问
-            </div>
-            <span class="date">今天</span>
+﻿@using GeneModel;
+@{
+    Layout = null;
+   
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>后台管理</title>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1" />
+    <meta http-equiv="X-UA-Compatible" content="IE=9" />
+    <link href="~/Content/manage/backUI.css" rel="stylesheet" />
+    <link href="~/Content/manage/default.css" rel="stylesheet" />
+    <link href="~/scripts/manage/easyui/easyuithemes/default/easyui.css" rel="stylesheet" />
+    <link href="~/scripts/manage/easyui/easyuithemes/icon.css" rel="stylesheet" />
+    <script src="~/scripts/jquery-1.10.2.min.js"></script>
+    <script src="~/scripts/bootstrap.min.js"></script>
+    <script src="~/scripts/manage/easyui/jquery.easyui.min.js"></script>
+    <script type="text/javascript">
+        //修改密码验证
+        function pawdyz() {
+            if ($("#pawdh").val() == "" || $("#pawdh").val() == null) {
+                $("#l1h").text("旧密码不能为空");
+            }
+            else if ($("#xpawdh").val() == "" || $("#xpawdh").val() == null || $("#xpawdh").val().length < 6) {
+                $("#l1h").text("");
+                $("#l2h").text("新密码长度不能小于6位");
+            }
+            else if ($("#xpawdh").val() != $("#xxpawdh").val()) {
+                $("#l2h").text("");
+                $("#l3h").text("新密码两次不一致");
+            }
+            else {
+                $("#l3h").text("");
+            }
+        }
+        //修改密码
+        function updatepawd() {
+            if ($("#pawdh").val() == "" || $("#pawdh").val() == null) {
+                $("#l1h").text("旧密码不能为空");
+                return;
+            }
+            else if ($("#xpawdh").val() == "" || $("#xpawdh").val() == null || $("#xpawdh").val().length < 6) {
+                $("#l1h").text("");
+                $("#l2h").text("新密码长度不能小于6位");
+                return;
+            }
+            else if ($("#xpawdh").val() != $("#xxpawdh").val()) {
+                $("#l2h").text("");
+                $("#l3h").text("新密码两次不一致");
+                return;
+            }
+            else {
+                $("#l3h").text("");
+            }
+            $.post("/Default/getSession", {}, function (data) {
+                if (data != "") {
+                    $.ajax({
+                        type: "post",
+                        url: "/Default/updatepawd",
+                        data: { id: data, pawd: $("#pawdh").val(), xpawd: $("#xpawdh").val() },
+                        success: function (data) {
+                            if (data == 1) {
+                                alert("修改成功");
+                                window.location.reload();
+                            }
+                            else if (data == 2) {
+                                alert("系统错误，修改失败！");
+                                window.location.reload();
+                            }
+
+                            else {
+                                $("#pawdh").val("");
+                                $("#xpawdh").val("");
+                                $("#xxpawdh").val("");
+                                alert("旧密码错误");
+                            }
+
+                        }
+                    })
+                }
+            })
+        }
+
+        function addTab(subtitle, url) {
+            if (!$('#tabs').tabs('exists', subtitle)) {
+                $('#tabs').tabs('add', {
+                    title: subtitle,
+                    content: createFrame(url),
+                    closable: true,
+                    width: $('#mainPanle').width() - 10,
+                    height: $('#mainPanle').height() - 26
+                });
+            } else {
+                var currTab = $('#tabs').tabs('getSelected');
+                var url = $(currTab.panel('options').content).attr('src');
+                $('#tabs').tabs('update', {
+                    tab: currTab,
+                    options: {
+                        content: createFrame(url)
+                    }
+                });
+                $('#tabs').tabs('select', subtitle);
+            }
+            tabClose();
+        }
+
+        function tabClose() {
+            /*双击关闭TAB选项卡*/
+            $(".tabs-inner").dblclick(function () {
+                var subtitle = $(this).children(".tabs-closable").text();
+                $('#tabs').tabs('close', subtitle);
+            })
+            /*为选项卡绑定右键*/
+            $(".tabs-inner").bind('contextmenu', function (e) {
+                $('#mm').menu('show', {
+                    left: e.pageX,
+                    top: e.pageY
+                });
+
+                var subtitle = $(this).children(".tabs-closable").text();
+
+                $('#mm').data("currtab", subtitle);
+                $('#tabs').tabs('select', subtitle);
+                return false;
+            });
+        }
+
+        function createFrame(url) {
+            var s = '<iframe name="mainFrame" scrolling="auto" frameborder="0"  src="' + url + '" class="ifame"></iframe>';
+            return s;
+        }
+
+        function InnerEvent(obj) {
+            var tabTitle = $(obj).text();
+            var url = $(obj).attr("data-href");
+            addTab(tabTitle, url);
+            $('.easyui-accordion li div').removeClass("selected");
+            $(obj).parent().addClass("selected");
+        }
+
+
+
+        //绑定右键菜单事件
+        function tabCloseEven() {
+            //刷新
+            $('#mm-tabupdate').click(function () {
+                var currTab = $('#tabs').tabs('getSelected');
+                var url = $(currTab.panel('options').content).attr('src');
+                $('#tabs').tabs('update', {
+                    tab: currTab,
+                    options: {
+                        content: createFrame(url)
+                    }
+                })
+            })
+            //关闭当前
+            $('#mm-tabclose').click(function () {
+                var currtab_title = $('#mm').data("currtab");
+                $('#tabs').tabs('close', currtab_title);
+            })
+            //全部关闭
+            $('#mm-tabcloseall').click(function () {
+                $('.tabs-inner span').each(function (i, n) {
+                    var t = $(n).text();
+                    $('#tabs').tabs('close', t);
+                });
+            });
+            //关闭除当前之外的TAB
+            $('#mm-tabcloseother').click(function () {
+                $('#mm-tabcloseright').click();
+                $('#mm-tabcloseleft').click();
+            });
+            //关闭当前右侧的TAB
+            $('#mm-tabcloseright').click(function () {
+                var nextall = $('.tabs-selected').nextAll();
+                if (nextall.length == 0) {
+                    return false;
+                }
+                nextall.each(function (i, n) {
+                    var t = $('a:eq(0) span', $(n)).text();
+                    $('#tabs').tabs('close', t);
+                });
+                return false;
+            });
+            //关闭当前左侧的TAB
+            $('#mm-tabcloseleft').click(function () {
+                var prevall = $('.tabs-selected').prevAll();
+                if (prevall.length == 0) {
+                    return false;
+                }
+                prevall.each(function (i, n) {
+                    var t = $('a:eq(0) span', $(n)).text();
+                    $('#tabs').tabs('close', t);
+                });
+                return false;
+            });
+
+            //退出
+            $("#mm-exit").click(function () {
+                $('#mm').menu('hide');
+            })
+        }
+    </script>
+</head>
+<body class="easyui-layout" style="overflow-y: hidden" scroll:"no">
+    <noscript>
+        <div style="position: absolute; z-index: 100000; height: 2046px; top: 0px; left: 0px; width: 100%; background: white; text-align: center;">
+            <img src="~/Images/noscript.gif" alt='抱歉，请开启脚本支持！' />
         </div>
-        <div class="col-md-3 col-sm-3 stat">
-            <div class="data">
-                <span class="number">3240</span>
-                用户
+    </noscript>
+    <div data-options="region:'south', split:true" style="height: 30px; background: #D2E0F2;">
+        <div class="footer">By 万方软件</div>
+    </div>
+    <div data-options="region:'west',split:false,title:'导航菜单'" style="width: 265px;" id="west">
+        <div id="p" title="用户中心" class="easyui-panel" data-options="iconCls:'icon-tip'" style="overflow: auto; padding: 10px; width: 265px;">
+            <table>
+                <tbody>
+                    <tr>
+                        <td>当前用户为：@ViewBag.UserName</td>
+                    </tr>
+                    <tr>
+                        <td>用户类别为：@ViewBag.Role</td>
+                    </tr>
+                    <tr>
+                        <td>登录时间为：@DateTime.Now.ToShortDateString()</td>
+                    </tr>
+                </tbody>
+            </table>
+            <div>
+                <a data-toggle="modal" data-target="#myModal" class="login" style="cursor: pointer;">【修改密码】</a>
+                @Html.ActionLink("【返回首页】", "Index", "Home", new { area = "" }, null) |
+                <a style="cursor:pointer" href="/Account/Exist">【安全退出】</a>
             </div>
-            <span class="date">2013年11月</span>
         </div>
-        <div class="col-md-3 col-sm-3 stat">
-            <div class="data">
-                <span class="number">322</span>
-                订单
+        <div class="easyui-panel" title="操作区" data-options="iconCls:'icon-tip',fit:true" style="overflow: auto; padding: 5px;">
+            <div class="easyui-accordion" data-options="border:false">
+                <!--  导航内容 -->
+                @foreach (var root in Model as List<WF_Menu>)
+                {
+                    <div title=@root.MenuName iconcls:"icon-sys" border:"false" style="font-size: 16px;">
+                        <ul class="easyui-tree">
+                            @if (root.SubList != null && root.SubList.Count > 0)
+                            {
+                                foreach (var subMenu in root.SubList)
+                                {
+                                    <li>
+                                        <a target:"mainFrame" data-href=@subMenu.Url><span class="icon icon-role"></span>@subMenu.MenuName</a>
+                                    </li>
+                                }
+                            }
+                        </ul>
+                    </div>
+                }
             </div>
-            <span class="date">本周</span>
-        </div>
-        <div class="col-md-3 col-sm-3 stat last">
-            <div class="data">
-                <span class="number">$2,340</span>
-                销售金额
-            </div>
-            <span class="date">最近30天</span>
         </div>
     </div>
-</div>
-<!-- end upper main stats -->
-<div id="pad-wrapper">
-    <!-- statistics chart built with jQuery Flot -->
-    <div class="row chart">
-        <div class="col-md-12">
-            <h4 class="clearfix">
-                订单统计
-                <div class="btn-group pull-right">
-                    <button class="glow left">日</button>
-                    <button class="glow middle active">月</button>
-                    <button class="glow right">年</button>
+    <div id="mainPanle" data-options="region:'center'" style="background: #eee; overflow-y: hidden; min-width: 70%;">
+        <div id="tabs" class="easyui-tabs" data-options="fit:true,border:false">
+            <div title="欢迎使用" data-options="iconCls:'icon-house'" style="padding: 20px; overflow: hidden; text-align: center;" id="home">
+               
+            </div>
+        </div>
+    </div>
+    <div id="mm" class="easyui-menu" style="width: 150px;">
+        <div id="mm-tabupdate">刷新</div>
+        <div class="menu-sep"></div>
+        <div id="mm-tabclose">关闭</div>
+        <div id="mm-tabcloseall">全部关闭</div>
+        <div id="mm-tabcloseother">除此之外全部关闭</div>
+        <div class="menu-sep"></div>
+        <div id="mm-tabcloseright">当前页右侧全部关闭</div>
+        <div id="mm-tabcloseleft">当前页左侧全部关闭</div>
+        <div class="menu-sep"></div>
+    </div>
+    <!-- 修改密码模态框（Modal） -->
+    <div style="width:600px;margin-left:30%" class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="myModalLabelh">修改密码</h4>
+                    <input id="idh" value="@Session["userid"]" type="hidden" />
                 </div>
-            </h4>
+                <div class="wrap">
+                    <div class="in">
+                        <span>旧密码：</span>
+                        <input type="password" id="pawdh" onblur="pawdyz()" name="pawd" placeholder="请输入旧密码"><span></span><p id="l1h"></p>
+                    </div>
+                    <div class="in">
+                        <span>新密码：</span>
+                        <input type="password" id="xpawdh" onblur="pawdyz()" name="xpawd" placeholder="请输入6位以上新密码"><span></span><p id="l2h"></p>
+                    </div>
+                    <div class="in">
+                        <span>确认密码：</span>
+                        <input type="password" id="xxpawdh" onblur="pawdyz()" name="xxpawd" placeholder="请输入6位以上新密码"><span></span><p id="l3h"></p>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" onclick="updatepawd()" class="btn btn-primary">提交更改</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
         </div>
-        <div class="col-md-12">
-            <div id="statsChart"></div>
-        </div>
+        <!-- /.modal-dialog -->
     </div>
-</div>
+    <!-- /.modal -->
+</body>
+</html>
+<script>
+    $(function () {
+        $('.easyui-accordion li a').click(function () {
+            var tabTitle = $(this).text();
+            var url = $(this).attr("data-href");
+            $(this).parent().addClass("selected");
+            addTab(tabTitle, url);
+            $('.easyui-accordion li div').removeClass("selected");
+        });
+        tabCloseEven();
+    });
+</script>
+

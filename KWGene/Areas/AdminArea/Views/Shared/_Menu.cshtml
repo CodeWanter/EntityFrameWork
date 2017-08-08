@@ -1,0 +1,67 @@
+﻿@using GeneModel;
+@{
+    var permission = Session["root"];
+}
+<div id="sidebar-nav">
+    <ul id="dashboard-menu">
+        <li class="active">
+            <div class="pointer">
+                <div class="arrow"></div>
+                <div class="arrow_border"></div>
+            </div>
+            <a href="index.html">
+                <i class="icon-home"></i>
+                <span>首页</span>
+            </a>
+        </li>
+        @foreach (var root in permission as List<WF_Menu>)
+        {
+            <li>
+                <a class="dropdown-toggle" href="#">
+                    <i class="icon-group"></i>
+                    <span>@root.MenuName</span>
+                    <i class="icon-chevron-down"></i>
+                </a>
+                @if (root.SubList != null && root.SubList.Count > 0)
+                {
+                    <ul class="submenu">
+                        @foreach (var subMenu in root.SubList)
+                        {
+                            <li><a target:"mainFrame" href=@subMenu.Url>@subMenu.MenuName</a></li>
+                        }
+                    </ul>
+                }
+            </li>
+        }
+
+        @*<li>
+                <a class="dropdown-toggle" href="#">
+                    <i class="icon-edit"></i>
+                    <span>查收查引</span>
+                    <i class="icon-chevron-down"></i>
+                </a>
+                <ul class="submenu">
+                    <li><a href="form-showcase.html">待分配订单</a></li>
+                    <li><a href="form-wizard.html">待处理订单</a></li>
+                    <li><a href="form-wizard.html">已处理订单</a></li>
+                    <li><a href="form-wizard.html">待审核订单</a></li>
+                    <li><a href="form-wizard.html">已审核订单</a></li>
+                </ul>
+            </li>
+            <li>
+                <a class="dropdown-toggle" href="tables.html">
+                    <i class="icon-edit"></i>
+                    <span>科技查新</span>
+                    <i class="icon-chevron-down"></i>
+                </a>
+                <ul class="submenu">
+                    <li><a href="form-showcase.html">待分配订单</a></li>
+                    <li><a href="form-wizard.html">待处理订单</a></li>
+                    <li><a href="form-wizard.html">已处理订单</a></li>
+                    <li><a href="form-wizard.html">待审核订单</a></li>
+                    <li><a href="form-wizard.html">已审核订单</a></li>
+                </ul>
+            </li>*@
+       
+    </ul>
+</div>

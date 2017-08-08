@@ -256,10 +256,10 @@ namespace GeneDal
         /// <param name="tableName">表名</param>
         /// <param name="columnName">列名</param>
         /// <param name="parts">IN参数</param>
-        public void DeleteByIdWithSql(string tableName, string columnName, int id)
+        public int  DeleteByIdWithSql(string tableName, string columnName, int id)
         {
             var sql = string.Format("DELETE FROM  {0} WHERE {1} = {2}", tableName, columnName, id);
-            _dbContext.Database.ExecuteSqlCommand(sql);
+            return _dbContext.Database.ExecuteSqlCommand(sql);
         }
 
         public void DeleteWithSql(string sqlStr, params SqlParameter[] parameters)

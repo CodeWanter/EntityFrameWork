@@ -19,21 +19,27 @@ namespace GeneDal
 		{
 		}
 	 }
-	public partial class MenuDetailDAL : BaseDAL<MenuDetail>
+	public partial class RoleToMenusDAL : BaseDAL<RoleToMenus>
 	{
-		public  MenuDetailDAL(DbContext entity):base(entity)
+		public  RoleToMenusDAL(DbContext entity):base(entity)
 		{
 		}
 	 }
-	public partial class MenuInfoDAL : BaseDAL<MenuInfo>
+	public partial class WF_MenuDAL : BaseDAL<WF_Menu>
 	{
-		public  MenuInfoDAL(DbContext entity):base(entity)
+		public  WF_MenuDAL(DbContext entity):base(entity)
 		{
 		}
 	 }
-	public partial class UserInfoDAL : BaseDAL<UserInfo>
+	public partial class WF_RoleDAL : BaseDAL<WF_Role>
 	{
-		public  UserInfoDAL(DbContext entity):base(entity)
+		public  WF_RoleDAL(DbContext entity):base(entity)
+		{
+		}
+	 }
+	public partial class WF_UserDAL : BaseDAL<WF_User>
+	{
+		public  WF_UserDAL(DbContext entity):base(entity)
 		{
 		}
 	 }

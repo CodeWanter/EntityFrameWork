@@ -1,0 +1,108 @@
+﻿@{
+    Layout = null;
+}
+<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+<div id="treeview-checkable" class=""></div>
+<div id="treeid">
+    @foreach (var item in Model)
+    {
+        <input value="@item.Id" type="hidden" />
+    }
+</div>
+<input id="saveRole" type="button" value="modity" />
+<script src="~/scripts/jquery-1.10.2.min.js"></script>
+<script src="~/scripts/jquery.query-2.1.7.js"></script>
+<script src="~/scripts/manage/bootstrap-treeview.min.js"></script>
+<script type="text/javascript">
+    var checkableTree;
+    $("#treeview-checkable").ready(function () {
+        $.ajax({
+            url: "/Account/GetTree",
+            type: "GET",
+            async: true,
+            cache: false,
+            contentType: "application/json; charset=UTF-8",
+            success: function (data) {
+                var dataInfo = data;   // 数据格式是固定的，可以从后台拼成固定的json串
+                checkableTree = $('#treeview-checkable').treeview({
+                    data: dataInfo,
+                    showIcon: false,
+                    showCheckbox: true,
+                    onNodeChecked: function (event, data) {
+                        //选中父节点，则自动选择子节点
+                        if (data.nodes != null) {
+                            var arrayInfo = data.nodes;
+                            for (var i = 0; i < arrayInfo.length; i++) {
+                                $('#treeview-checkable').treeview('toggleNodeChecked', [arrayInfo[i].nodeId, { silent: true }]);
+                            }
+                        }
+                    },
+                    onNodeUnchecked: function (event, data) {
+                        //取消选中父节点，则自动取消选择子节点
+                        if (data.nodes != null) {
+                            var arrayInfo = data.nodes;
+                            for (var i = 0; i < arrayInfo.length; i++) {
+                                $('#treeview-checkable').treeview('toggleNodeChecked', [arrayInfo[i].nodeId, { silent: true }]);
+                            }
+                        }
+                    }
+                });
+                var menuTreeList = new Array();
+                var m = 0
+                var li = 0;
+                var treeIds = $('#treeid  input');
+                treeIds.each(function () {
+                    menuTreeList[m] = $(this).val();// 得到的是字符串数组
+                    m++;
+                });
+                for (var n = 0; n < menuTreeList.length; n++) {
+                    var aa = parseInt(menuTreeList[n]);// 这里必须转换成整型 ，aa必须是整型
+                    checkableTree.treeview('toggleNodeChecked', [aa, { silent: true }]);// 选中checkbox
+                }
+                ///*对比两个树 如果菜单权限已经存在 选中checkbox*/
+                //$('#modifyRoleButton').click(function () {
+                //    var li = 0;
+                //    var m = 0
+                //    var menuTreeList = new Array();
+
+                //    $('#treeid  li').each(function () {
+                //        menuTreeList[m] = $(this).attr('data-nodeid');// 得到的是字符串数组
+                //        m++;
+                //    });
+                //    for (var n = 0; n < menuTreeList.length; n++) {
+                //        var aa = parseInt(menuTreeList[n]);// 这里必须转换成整型 ，aa必须是整型
+                //        checkableTree.treeview('toggleNodeChecked', [aa, { silent: true }]);// 选中checkbox
+                //    }
+                //});
+
+                /*更新完提交树*/
+                $('#saveRole').click(function () {
+                    var menuList = new Array();
+                    var li = 0;
+                    $('#treeview-checkable  li').each(function () {
+                        if ($(this).hasClass("list-group-item node-treeview-checkable node-checked")) {
+                            menuList[li] = $(this).attr('data-nodeid');
+                            li++;
+                        }
+                    });
+
+                    var data = { roleId: roleId, menuList: menuList };
+                    $.ajax({
+                        type: "PUT",
+                        url: "/roleMenu/roleMenu.json",
+                        data: JSON.stringify(data),
+                        dataType: "json",
+                        contentType: 'application/json; charset=utf-8',
+                        traditional: true,
+                        success: function (data) {
+                            alert(data);
+                        }
+                    });
+                });
+            },
+            error: function () {
+                alert("树形结构加载失败！")
+            }
+        });
+    });
+</script>

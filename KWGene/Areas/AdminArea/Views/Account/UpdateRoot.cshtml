@@ -1,0 +1,69 @@
+﻿@{
+    Layout = null;
+}
+<link href="~/scripts/manage/zTree_v3-master/css/zTreeStyle/zTreeStyle.css" rel="stylesheet" />
+<div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h4 class="modal-title" id="myModalLabelh">角色组信息</h4>
+        </div>
+        <div class="wrap">
+            <ul id="treeDemo" class="ztree"></ul>
+        </div>
+        <div class="modal-footer">
+            <button type="button" id="saveRole" onclick="SaveRoots()" class="btn btn-primary">提交更改</button>
+            <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+        </div>
+        <input type="hidden" id="ID"  value="@ViewBag.GetID" />
+    </div>
+</div>
+<script src="~/scripts/jquery-1.10.2.min.js"></script>
+<script src="~/scripts/jquery.query-2.1.7.js"></script>
+<script src="~/scripts/manage/zTree_v3-master/js/jquery.ztree.all.min.js"></script>
+<script type="text/javascript">
+    var setting = {
+        check: {
+            enable: true
+        },
+        data: {
+            simpleData: {
+                enable: true,
+                idKey: "id",
+                pIdKey: "pId",
+            }
+        },
+        callback:{
+            onCheck:onCheck
+        }
+    };
+    var ztree;
+    var nodesArray;
+    function getChildNodes(treeNode) {
+        var childNodes = ztree.transformToArray(treeNode);
+        var nodes = new Array();
+        for (i = 0; i < childNodes.length; i++) {
+            nodes[i] = childNodes[i].id;
+        }
+        return nodes.join(",");
+    }
+    $(document).ready(function () {
+        $.post("/Account/GetTreeRoot", { "id": $.query.get("id") }, function (zNodes) {
+            ztree = $.fn.zTree.init($("#treeDemo"), setting, zNodes);
+        });
+    });
+    function onCheck(e, treeId, treeNode) {
+        var treeObj = $.fn.zTree.getZTreeObj("treeDemo"),
+        nodes = treeObj.getCheckedNodes(true),
+        v = "";
+        nodesArray = "";
+        for (var i = 0; i < nodes.length; i++) {
+            nodesArray += nodes[i].id + ",";
+            //alert(nodes[i].id); //获取选中节点的值
+        }
+    }
+    function SaveRoots() {
+        $.post("/Account/SaveRoots", { "id": $.query.get("id"), "znodes": nodesArray }, function (data) {
+
+        });
+    }
+</script>

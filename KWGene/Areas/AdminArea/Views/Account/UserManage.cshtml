@@ -1,0 +1,143 @@
+﻿@{
+    ViewBag.Title = "UserList";
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <link href="~/Content/manage/admin.css" rel="stylesheet" />
+    <link href="~/Content/manage/bootstrap/bootstrap.css" rel="stylesheet" />
+    <link href="~/scripts/manage/DataTables-1.10.13/media/css/dataTables.bootstrap.min.css" rel="stylesheet" />
+    <script type="text/javascript">
+        /* /全选 功能   */
+        function checkAll() {
+            var $ck = $("#example [name='checkbox']");
+            var $c1 = $("#example [name='checkbox0']");
+            for (var i = 0; i < $ck.length; i++) {
+                if ($c1[0].checked) {
+                    $($ck[i]).prop("checked", true);
+                }
+                else {
+                    $($ck[i]).prop("checked", false);
+                }
+            }
+        }
+        //批量删除方法
+        function deleteall() {
+            var $ck = $("#example [name='checkbox']");
+            var xe = []; var n = 0;
+            var f = false;
+            for (var i = 0; i < $ck.length; i++) {
+                if ($ck[i].checked) {
+                    xe.push($($ck[i]).val());
+                    f = true;
+                    n++;
+                }
+            }
+            if (!f) {
+                alert("请勾选要删除的条目"); return;
+            }
+            else if (confirm("确定要删除选中的" + n + "条记录么？")) {
+                $.ajax({
+                    type: "post",
+                    url: "/Account/DelUser",
+                    traditional: true,
+                    data: { x: xe },
+                    success: function (data) {
+                        if (data == 1) {
+                            alert("删除成功");
+                            window.location.href = '/AdminArea/Account/UserManage';
+                        }
+                        else {
+                            alert("系统错误，删除失败！");
+                            window.location.href = '/AdminArea/Account/UserManage';
+                        }
+                    }
+                })
+            }
+        }
+    </script>
+    <title>用户管理</title>
+</head>
+
+<body style="width: 95%; margin-left: 2%; background: #FFFFFF url('../../../Images/manage/bodyBg.jpg') no-repeat right;">
+    <div class="SY201112_TB0_title" style="margin-bottom:10px;"><span>用户管理</span></div>
+    <form action="/AdminArea/Account/UserManage">
+        <div style="margin-bottom:10px;">
+            姓名：<input type="text" id="TrueName" name="TrueName" />
+            <input type="submit" value="搜 索" class="btn btn-primary btn-sm" />
+            <a onclick="deleteall()" class="btn btn-primary btn-sm">删 除</a>
+            <a href="UpdateUser/0" class="btn btn-primary btn-sm">添加用户</a>
+        </div>
+    </form>
+    <div id="d1" style="margin-left: 30px" class="functionBtn"></div><div>
+        <!-- search end -->
+        <table id="example" class="table table-striped table-bordered" style="overflow: hidden;">
+            <thead>
+                <tr class="tableTit">
+                    <th><input onclick="checkAll()" id="Checkbox1" name="checkbox0" type="checkbox" /></th>
+                    <th>用户名</th>
+                    <th>姓名</th>
+                    <th>角色</th>
+                    <th>校区</th>
+                    <th>注册时间</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                    @foreach (var user in Model)
+                    {
+                        <tr>
+                            <td style="width: 15px;" class="del"><input name="checkbox" value="@user.Id" type="checkbox" /></td>
+                            <td>@user.UserName</td>
+                            <td>@user.TrueName</td>
+                            <td>@user.WF_Role.RoleName</td>
+                            <td>@user.Campus</td>
+                            <td>@user.Createtime.ToString("yyyy-MM-dd")</td>
+                            <td><a href="UpdateUser/@user.Id">修改</a></td>
+                        </tr>
+                    }
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
+<script src="~/scripts/jquery-1.10.2.min.js"></script>
+<script src="~/scripts/manage/DataTables-1.10.13/media/js/jquery.dataTables.js"></script>
+<script src="~/scripts/manage/DataTables-1.10.13/media/js/dataTables.bootstrap.min.js"></script>
+<script type="text/javascript">
+    //DataTable分页插件
+    $(function () {
+        $('#example').DataTable({
+            "pagingType": "full_numbers",
+            "sLoadingRecords": "正在加载数据...",
+            "sZeroRecords": "暂无数据",
+            "bPaginate": true, //翻页功能
+            "bLengthChange": false, //改变每页显示数据数量
+            "bFilter": false, //过滤功能
+            "bSort": false, //排序功能
+            "bInfo": false,//页脚信息
+            "bAutoWidth": true,//自动宽度
+            "language": {
+                "processing": "玩命加载中...",
+                "lengthMenu": "显示 _MENU_ 项结果",
+                "zeroRecords": "没有匹配结果",
+                "info": "",
+                "infoEmpty": "",
+                "infoFiltered": "(由 _MAX_ 项结果过滤)",
+                "infoPostFix": "",
+                "url": "",
+                "search": "搜&nbsp索：",
+                "paginate": {
+                    "first": "首页",
+                    "previous": "上一页",
+                    "next": "下一页",
+                    "last": "末页"
+                }
+            }
+        });
+    })
+</script>
+
+

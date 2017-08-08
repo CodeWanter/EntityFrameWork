@@ -94,54 +94,71 @@ namespace GeneDal
 		}
 	}
 
-	private MenuDetailDAL _menudetailDAL;
-	public MenuDetailDAL MenuDetailDAL
+	private RoleToMenusDAL _roletomenusDAL;
+	public RoleToMenusDAL RoleToMenusDAL
 	{
 		get
 		{
-			if (_menudetailDAL == null)
+			if (_roletomenusDAL == null)
 			{
-				_menudetailDAL = new MenuDetailDAL(entity);
+				_roletomenusDAL = new RoleToMenusDAL(entity);
 			}
-			return _menudetailDAL;
+			return _roletomenusDAL;
 		}
 		set
 		{
-			_menudetailDAL = value;
+			_roletomenusDAL = value;
 		}
 	}
 
-	private MenuInfoDAL _menuinfoDAL;
-	public MenuInfoDAL MenuInfoDAL
+	private WF_MenuDAL _wf_menuDAL;
+	public WF_MenuDAL WF_MenuDAL
 	{
 		get
 		{
-			if (_menuinfoDAL == null)
+			if (_wf_menuDAL == null)
 			{
-				_menuinfoDAL = new MenuInfoDAL(entity);
+				_wf_menuDAL = new WF_MenuDAL(entity);
 			}
-			return _menuinfoDAL;
+			return _wf_menuDAL;
 		}
 		set
 		{
-			_menuinfoDAL = value;
+			_wf_menuDAL = value;
 		}
 	}
 
-	private UserInfoDAL _userinfoDAL;
-	public UserInfoDAL UserInfoDAL
+	private WF_RoleDAL _wf_roleDAL;
+	public WF_RoleDAL WF_RoleDAL
 	{
 		get
 		{
-			if (_userinfoDAL == null)
+			if (_wf_roleDAL == null)
 			{
-				_userinfoDAL = new UserInfoDAL(entity);
+				_wf_roleDAL = new WF_RoleDAL(entity);
 			}
-			return _userinfoDAL;
+			return _wf_roleDAL;
 		}
 		set
 		{
-			_userinfoDAL = value;
+			_wf_roleDAL = value;
+		}
+	}
+
+	private WF_UserDAL _wf_userDAL;
+	public WF_UserDAL WF_UserDAL
+	{
+		get
+		{
+			if (_wf_userDAL == null)
+			{
+				_wf_userDAL = new WF_UserDAL(entity);
+			}
+			return _wf_userDAL;
+		}
+		set
+		{
+			_wf_userDAL = value;
 		}
 	}
 

@@ -5,14 +5,16 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="b2f20ee72b3b42b087b4dccb0f243c49" Name="Diagram1">
-        <EntityTypeShape EntityType="KWGENEModel.CheckGuide" Width="1.5" PointX="0.75" PointY="3.375" />
-        <EntityTypeShape EntityType="KWGENEModel.ArticleList" Width="1.5" PointX="3.25" PointY="3.5" />
-        <AssociationConnector Association="KWGENEModel.CheckGuideArticleList" />
-        <EntityTypeShape EntityType="KWGENEModel.UserInfo" Width="1.5" PointX="0.75" PointY="0.5" />
-        <EntityTypeShape EntityType="KWGENEModel.MenuInfo" Width="1.5" PointX="3.25" PointY="0.625" FillColor="255, 192, 192" />
-        <EntityTypeShape EntityType="KWGENEModel.MenuDetail" Width="1.5" PointX="5.75" PointY="0.625" FillColor="255, 224, 192" />
-        <AssociationConnector Association="KWGENEModel.MenuInfoMenuDetail" />
-        <AssociationConnector Association="KWGENEModel.UserInfoMenuInfo" />
+        <EntityTypeShape EntityType="KWGENEModel.ArticleList" Width="1.5" PointX="3" PointY="5" />
+        <EntityTypeShape EntityType="KWGENEModel.CheckGuide" Width="1.5" PointX="0.75" PointY="5" />
+        <EntityTypeShape EntityType="KWGENEModel.WF_Role" Width="1.5" PointX="0.875" PointY="0.5" />
+        <EntityTypeShape EntityType="KWGENEModel.WF_User" Width="1.5" PointX="3.25" PointY="1.75" />
+        <AssociationConnector Association="KWGENEModel.FK_CheckGuideArticleList" />
+        <AssociationConnector Association="KWGENEModel.FK_WF_RoleUserInfo" />
+        <EntityTypeShape EntityType="KWGENEModel.RoleToMenus" Width="1.5" PointX="5.75" PointY="0.5" />
+        <AssociationConnector Association="KWGENEModel.RoleToMenusWF_Role" />
+        <EntityTypeShape EntityType="KWGENEModel.WF_Menu" Width="1.5" PointX="5.75" PointY="3" />
+        <AssociationConnector Association="KWGENEModel.FK_RoleToMenusWF_Menu" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

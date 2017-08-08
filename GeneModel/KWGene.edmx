@@ -4,65 +4,223 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="KWGENEModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2012" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-  <EntityContainer Name="KWGENEModelStoreContainer">
-    </EntityContainer>
-</Schema></edmx:StorageModels>
-    <!-- CSDL content -->
-    <edmx:ConceptualModels>
-      <Schema Namespace="KWGENEModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityContainer Name="KWGENEEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="CheckGuide" EntityType="KWGENEModel.CheckGuide" />
-          <EntitySet Name="ArticleList" EntityType="KWGENEModel.ArticleList" />
-          <AssociationSet Name="CheckGuideArticleList" Association="KWGENEModel.CheckGuideArticleList">
-            <End Role="CheckGuide" EntitySet="CheckGuide" />
-            <End Role="ArticleList" EntitySet="ArticleList" />
-          </AssociationSet>
-          <EntitySet Name="UserInfo" EntityType="KWGENEModel.UserInfo" />
-          <EntitySet Name="MenuInfo" EntityType="KWGENEModel.MenuInfo" />
-          <EntitySet Name="MenuDetail" EntityType="KWGENEModel.MenuDetail" />
-          <AssociationSet Name="MenuInfoMenuDetail" Association="KWGENEModel.MenuInfoMenuDetail">
-            <End EntitySet="MenuInfo" Role="MenuInfo" />
-            <End EntitySet="MenuDetail" Role="MenuDetail" />
-          </AssociationSet>
-          <AssociationSet Name="UserInfoMenuInfo" Association="KWGENEModel.UserInfoMenuInfo">
-            <End Role="UserInfo" EntitySet="UserInfo" />
-            <End Role="MenuInfo" EntitySet="MenuInfo" />
-          </AssociationSet>
-        </EntityContainer>
+    <Schema Namespace="KWGENEModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="ArticleList">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Title" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="FirstAuthor" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Corpartner" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Publisher" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Remark" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="CheckGuideId" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="CheckGuide">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Account" Type="String" Nullable="false" MaxLength="Max" >
-            <Documentation>
-              <Summary>账号</Summary>
-              <LongDescription>账号</LongDescription>
-            </Documentation>
-          </Property>
-          <Property Name="Department" Type="String" Nullable="false" />
-          <Property Name="Campus" Type="String" Nullable="false" Unicode="true" />
-          <NavigationProperty Name="ArticleList" Relationship="KWGENEModel.CheckGuideArticleList" FromRole="CheckGuide" ToRole="ArticleList" />
-          <Property Name="Email" Type="String" Nullable="false" />
-          <Property Name="Phone" Type="String" Nullable="false" />
-          <Property Name="PayType" Type="String" Nullable="false" />
-          <Property Name="Doc" Type="String" Nullable="false" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Account" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Department" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Campus" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Email" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Phone" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="PayType" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Doc" Type="nvarchar(max)" Nullable="false" />
         </EntityType>
+        <EntityType Name="RoleToMenus">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="WF_RoleId" Type="int" Nullable="false" />
+          <Property Name="WF_MenuId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="WF_Menu">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MenuName" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Url" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Icon" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="PId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="WF_Role">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RoleName" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Introduce" Type="nvarchar(max)" />
+          <Property Name="weight" Type="int" />
+        </EntityType>
+        <EntityType Name="WF_User">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserName" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="TrueName" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Password" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Createtime" Type="datetime" Nullable="false" />
+          <Property Name="WF_RoleId" Type="int" Nullable="false" />
+          <Property Name="Campus" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <Association Name="FK_CheckGuideArticleList">
+          <End Role="CheckGuide" Type="Self.CheckGuide" Multiplicity="1" />
+          <End Role="ArticleList" Type="Self.ArticleList" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CheckGuide">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ArticleList">
+              <PropertyRef Name="CheckGuideId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RoleToMenusWF_Menu">
+          <End Role="WF_Menu" Type="Self.WF_Menu" Multiplicity="1" />
+          <End Role="RoleToMenus" Type="Self.RoleToMenus" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="WF_Menu">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="RoleToMenus">
+              <PropertyRef Name="WF_MenuId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RoleToMenusWF_Role">
+          <End Role="WF_Role" Type="Self.WF_Role" Multiplicity="1" />
+          <End Role="RoleToMenus" Type="Self.RoleToMenus" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="WF_Role">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="RoleToMenus">
+              <PropertyRef Name="WF_RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_WF_RoleUserInfo">
+          <End Role="WF_Role" Type="Self.WF_Role" Multiplicity="1" />
+          <End Role="WF_User" Type="Self.WF_User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="WF_Role">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="WF_User">
+              <PropertyRef Name="WF_RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="KWGENEModelStoreContainer">
+          <EntitySet Name="ArticleList" EntityType="Self.ArticleList" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CheckGuide" EntityType="Self.CheckGuide" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="RoleToMenus" EntityType="Self.RoleToMenus" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="WF_Menu" EntityType="Self.WF_Menu" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="WF_Role" EntityType="Self.WF_Role" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="WF_User" EntityType="Self.WF_User" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_CheckGuideArticleList" Association="Self.FK_CheckGuideArticleList">
+            <End Role="CheckGuide" EntitySet="CheckGuide" />
+            <End Role="ArticleList" EntitySet="ArticleList" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RoleToMenusWF_Menu" Association="Self.FK_RoleToMenusWF_Menu">
+            <End Role="WF_Menu" EntitySet="WF_Menu" />
+            <End Role="RoleToMenus" EntitySet="RoleToMenus" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RoleToMenusWF_Role" Association="Self.FK_RoleToMenusWF_Role">
+            <End Role="WF_Role" EntitySet="WF_Role" />
+            <End Role="RoleToMenus" EntitySet="RoleToMenus" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WF_RoleUserInfo" Association="Self.FK_WF_RoleUserInfo">
+            <End Role="WF_Role" EntitySet="WF_Role" />
+            <End Role="WF_User" EntitySet="WF_User" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="KWGENEModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="KWGENEEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="ArticleList" EntityType="KWGENEModel.ArticleList" />
+          <EntitySet Name="CheckGuide" EntityType="KWGENEModel.CheckGuide" />
+          <EntitySet Name="WF_Role" EntityType="KWGENEModel.WF_Role" />
+          <EntitySet Name="WF_User" EntityType="KWGENEModel.WF_User" />
+          <AssociationSet Name="FK_CheckGuideArticleList" Association="KWGENEModel.FK_CheckGuideArticleList">
+            <End Role="CheckGuide" EntitySet="CheckGuide" />
+            <End Role="ArticleList" EntitySet="ArticleList" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WF_RoleUserInfo" Association="KWGENEModel.FK_WF_RoleUserInfo">
+            <End Role="WF_Role" EntitySet="WF_Role" />
+            <End Role="WF_User" EntitySet="WF_User" />
+          </AssociationSet>
+          <EntitySet Name="RoleToMenus" EntityType="KWGENEModel.RoleToMenus" />
+          <AssociationSet Name="RoleToMenusWF_Role" Association="KWGENEModel.RoleToMenusWF_Role">
+            <End Role="RoleToMenus" EntitySet="RoleToMenus" />
+            <End Role="WF_Role" EntitySet="WF_Role" />
+          </AssociationSet>
+          <EntitySet Name="WF_Menu" EntityType="KWGENEModel.WF_Menu" />
+          <AssociationSet Name="FK_RoleToMenusWF_Menu" Association="KWGENEModel.FK_RoleToMenusWF_Menu">
+            <End Role="WF_Menu" EntitySet="WF_Menu" />
+            <End Role="RoleToMenus" EntitySet="RoleToMenus" />
+          </AssociationSet>
+        </EntityContainer>
         <EntityType Name="ArticleList">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Title" Type="String" Nullable="false" />
-          <Property Name="FirstAuthor" Type="String" Nullable="false" />
-          <Property Name="Corpartner" Type="String" Nullable="false" />
-          <Property Name="Publisher" Type="String" Nullable="false" />
-          <Property Name="Remark" Type="String" Nullable="false" />
-          <NavigationProperty Name="CheckGuide" Relationship="KWGENEModel.CheckGuideArticleList" FromRole="ArticleList" ToRole="CheckGuide" />
+          <Property Name="Title" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="FirstAuthor" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Corpartner" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Publisher" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Remark" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="CheckGuideId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="CheckGuide" Relationship="KWGENEModel.FK_CheckGuideArticleList" FromRole="ArticleList" ToRole="CheckGuide" />
         </EntityType>
-        <Association Name="CheckGuideArticleList">
+        <EntityType Name="CheckGuide">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Account" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Department" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Campus" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Phone" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PayType" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Doc" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="ArticleList" Relationship="KWGENEModel.FK_CheckGuideArticleList" FromRole="CheckGuide" ToRole="ArticleList" />
+        </EntityType>
+        <EntityType Name="WF_Role">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RoleName" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Introduce" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="WF_User" Relationship="KWGENEModel.FK_WF_RoleUserInfo" FromRole="WF_Role" ToRole="WF_User" />
+          <NavigationProperty Name="RoleToMenus" Relationship="KWGENEModel.RoleToMenusWF_Role" FromRole="WF_Role" ToRole="RoleToMenus" />
+          <Property Name="weight" Type="Int32" />
+        </EntityType>
+        <EntityType Name="WF_User">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserName" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Password" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Createtime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="WF_RoleId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="WF_Role" Relationship="KWGENEModel.FK_WF_RoleUserInfo" FromRole="WF_User" ToRole="WF_Role" />
+          <Property Name="TrueName" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Campus" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <Association Name="FK_CheckGuideArticleList">
           <End Type="KWGENEModel.CheckGuide" Role="CheckGuide" Multiplicity="1" />
           <End Type="KWGENEModel.ArticleList" Role="ArticleList" Multiplicity="*" />
           <ReferentialConstraint>
@@ -74,60 +232,139 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="UserInfo">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="UserName" Type="String" Nullable="false" />
-          <Property Name="Password" Type="String" Nullable="false" />
-          <Property Name="Role" Type="String" Nullable="false" />
-          <Property Name="Root" Type="String" Nullable="false" />
-          <Property Name="Createtime" Type="DateTime" Nullable="false" />
-          <NavigationProperty Name="MenuInfo" Relationship="KWGENEModel.UserInfoMenuInfo" FromRole="UserInfo" ToRole="MenuInfo" />
-        </EntityType>
-        <EntityType Name="MenuInfo">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="MenuName" Type="String" Nullable="false" />
-          <Property Name="UserInfoId" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="MenuDetail" Relationship="KWGENEModel.MenuInfoMenuDetail" FromRole="MenuInfo" ToRole="MenuDetail" />
-          <NavigationProperty Name="UserInfo" Relationship="KWGENEModel.UserInfoMenuInfo" FromRole="MenuInfo" ToRole="UserInfo" />
-        </EntityType>
-        <EntityType Name="MenuDetail">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="SubName" Type="String" Nullable="false" />
-          <Property Name="SubUrl" Type="String" Nullable="false" />
-          <NavigationProperty Name="MenuInfo" Relationship="KWGENEModel.MenuInfoMenuDetail" FromRole="MenuDetail" ToRole="MenuInfo" />
-          <Property Name="MenuInfoId" Type="Int32" Nullable="false" />
-        </EntityType>
-        <Association Name="MenuInfoMenuDetail">
-          <End Type="KWGENEModel.MenuInfo" Multiplicity="1" Role="MenuInfo" />
-          <End Type="KWGENEModel.MenuDetail" Multiplicity="*" Role="MenuDetail" />
+        <Association Name="FK_WF_RoleUserInfo">
+          <End Type="KWGENEModel.WF_Role" Role="WF_Role" Multiplicity="1" />
+          <End Type="KWGENEModel.WF_User" Role="WF_User" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="MenuInfo">
+            <Principal Role="WF_Role">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="MenuDetail">
-              <PropertyRef Name="MenuInfoId" />
+            <Dependent Role="WF_User">
+              <PropertyRef Name="WF_RoleId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="UserInfoMenuInfo">
-          <End Type="KWGENEModel.UserInfo" Role="UserInfo" Multiplicity="*" />
-          <End Type="KWGENEModel.MenuInfo" Role="MenuInfo" Multiplicity="*" />
+        <EntityType Name="RoleToMenus">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="WF_Role" Relationship="KWGENEModel.RoleToMenusWF_Role" FromRole="RoleToMenus" ToRole="WF_Role" />
+          <Property Name="WF_RoleId" Type="Int32" Nullable="false" />
+          <Property Name="WF_MenuId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="WF_Menu" Relationship="KWGENEModel.FK_RoleToMenusWF_Menu" FromRole="RoleToMenus" ToRole="WF_Menu" />
+        </EntityType>
+        <Association Name="RoleToMenusWF_Role">
+          <End Type="KWGENEModel.RoleToMenus" Role="RoleToMenus" Multiplicity="*" />
+          <End Type="KWGENEModel.WF_Role" Role="WF_Role" Multiplicity="1" />
+          <ReferentialConstraint>
+            <Principal Role="WF_Role">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="RoleToMenus">
+              <PropertyRef Name="WF_RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
         </Association>
-      </Schema>
+        <EntityType Name="WF_Menu">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MenuName" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Url" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Icon" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="RoleToMenus" Relationship="KWGENEModel.FK_RoleToMenusWF_Menu" FromRole="WF_Menu" ToRole="RoleToMenus" />
+        </EntityType>
+        <Association Name="FK_RoleToMenusWF_Menu">
+          <End Type="KWGENEModel.WF_Menu" Role="WF_Menu" Multiplicity="1" />
+          <End Type="KWGENEModel.RoleToMenus" Role="RoleToMenus" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="WF_Menu">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="RoleToMenus">
+              <PropertyRef Name="WF_MenuId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
     <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
   <EntityContainerMapping StorageEntityContainer="KWGENEModelStoreContainer" CdmEntityContainer="KWGENEEntities">
+    <EntitySetMapping Name="ArticleList">
+      <EntityTypeMapping TypeName="IsTypeOf(KWGENEModel.ArticleList)">
+        <MappingFragment StoreEntitySet="ArticleList">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Title" ColumnName="Title" />
+          <ScalarProperty Name="FirstAuthor" ColumnName="FirstAuthor" />
+          <ScalarProperty Name="Corpartner" ColumnName="Corpartner" />
+          <ScalarProperty Name="Publisher" ColumnName="Publisher" />
+          <ScalarProperty Name="Remark" ColumnName="Remark" />
+          <ScalarProperty Name="CheckGuideId" ColumnName="CheckGuideId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CheckGuide">
+      <EntityTypeMapping TypeName="IsTypeOf(KWGENEModel.CheckGuide)">
+        <MappingFragment StoreEntitySet="CheckGuide">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Account" ColumnName="Account" />
+          <ScalarProperty Name="Department" ColumnName="Department" />
+          <ScalarProperty Name="Campus" ColumnName="Campus" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="Phone" ColumnName="Phone" />
+          <ScalarProperty Name="PayType" ColumnName="PayType" />
+          <ScalarProperty Name="Doc" ColumnName="Doc" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="WF_Role">
+      <EntityTypeMapping TypeName="IsTypeOf(KWGENEModel.WF_Role)">
+        <MappingFragment StoreEntitySet="WF_Role">
+          <ScalarProperty Name="weight" ColumnName="weight" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="RoleName" ColumnName="RoleName" />
+          <ScalarProperty Name="Introduce" ColumnName="Introduce" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="WF_User">
+      <EntityTypeMapping TypeName="IsTypeOf(KWGENEModel.WF_User)">
+        <MappingFragment StoreEntitySet="WF_User">
+          <ScalarProperty Name="Campus" ColumnName="Campus" />
+                <ScalarProperty Name="TrueName" ColumnName="TrueName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="UserName" ColumnName="UserName" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+          <ScalarProperty Name="Createtime" ColumnName="Createtime" />
+          <ScalarProperty Name="WF_RoleId" ColumnName="WF_RoleId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="RoleToMenus">
+      <EntityTypeMapping TypeName="IsTypeOf(KWGENEModel.RoleToMenus)">
+        <MappingFragment StoreEntitySet="RoleToMenus">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="WF_RoleId" ColumnName="WF_RoleId" />
+          <ScalarProperty Name="WF_MenuId" ColumnName="WF_MenuId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+          <EntitySetMapping Name="WF_Menu">
+            <EntityTypeMapping TypeName="KWGENEModel.WF_Menu">
+              <MappingFragment StoreEntitySet="WF_Menu">
+                <ScalarProperty Name="PId" ColumnName="PId" />
+                <ScalarProperty Name="Icon" ColumnName="Icon" />
+                <ScalarProperty Name="Url" ColumnName="Url" />
+                <ScalarProperty Name="MenuName" ColumnName="MenuName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping></edmx:Mappings>
   </edmx:Runtime>

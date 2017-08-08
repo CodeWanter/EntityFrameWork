@@ -175,9 +175,9 @@ namespace GeneBll
             bigDataSaveHelper.BigSave(sourcedt, destinationTableName);
         }
 
-        public void ExecuteDeleteByIdWithSql(string destinationTableName, string columnName, int id)
+        public int ExecuteDeleteByIdWithSql(string destinationTableName, string columnName, int id)
         {
-            CurrentDAL.DeleteByIdWithSql(destinationTableName, columnName, id);
+           return CurrentDAL.DeleteByIdWithSql(destinationTableName, columnName, id);
         }
 
         public void ExecuteDeleteWithSql(string sqlStr, params SqlParameter[] parameters)

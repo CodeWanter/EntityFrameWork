@@ -15,15 +15,15 @@ namespace KWGene
     {
         void Application_Start(object sender, EventArgs e)
         {
-           // Database.SetInitializer<GeneModel.KWGENEEntities>(new CreateDatabaseIfNotExists<GeneModel.KWGENEEntities>());
-            Database.SetInitializer<GeneModel.KWGENEEntities>(new DropCreateDatabaseIfModelChanges<GeneModel.KWGENEEntities>());
+            // Database.SetInitializer<GeneModel.KWGENEEntities>(new CreateDatabaseIfNotExists<GeneModel.KWGENEEntities>());
+            //Database.SetInitializer<GeneModel.KWGENEEntities>(new DropCreateDatabaseIfModelChanges<GeneModel.KWGENEEntities>());
 
             // Code that runs on application startup
             AreaRegistration.RegisterAllAreas();
             GlobalConfiguration.Configure(WebApiConfig.Register);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
 
-            Database.SetInitializer<DbContext>(null);
+            //Database.SetInitializer<DbContext>(null);
         }
     }
 }

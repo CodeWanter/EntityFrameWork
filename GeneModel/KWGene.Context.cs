@@ -27,10 +27,11 @@ namespace GeneModel
             //throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<CheckGuide> CheckGuide { get; set; }
         public virtual DbSet<ArticleList> ArticleList { get; set; }
-        public virtual DbSet<UserInfo> UserInfo { get; set; }
-        public virtual DbSet<MenuInfo> MenuInfo { get; set; }
-        public virtual DbSet<MenuDetail> MenuDetail { get; set; }
+        public virtual DbSet<CheckGuide> CheckGuide { get; set; }
+        public virtual DbSet<WF_Role> WF_Role { get; set; }
+        public virtual DbSet<WF_User> WF_User { get; set; }
+        public virtual DbSet<RoleToMenus> RoleToMenus { get; set; }
+        public virtual DbSet<WF_Menu> WF_Menu { get; set; }
     }
 }

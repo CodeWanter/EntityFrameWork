@@ -27,9 +27,10 @@ namespace GeneBll
             var bulider = new ContainerBuilder();
 			            bulider.RegisterType<ArticleListBLL >();
 			            bulider.RegisterType<CheckGuideBLL >();
-			            bulider.RegisterType<MenuDetailBLL >();
-			            bulider.RegisterType<MenuInfoBLL >();
-			            bulider.RegisterType<UserInfoBLL >();
+			            bulider.RegisterType<RoleToMenusBLL >();
+			            bulider.RegisterType<WF_MenuBLL >();
+			            bulider.RegisterType<WF_RoleBLL >();
+			            bulider.RegisterType<WF_UserBLL >();
 			            container = bulider.Build();
         }
         
@@ -48,25 +49,32 @@ namespace GeneBll
 			CurrentDAL = DbSession.CheckGuideDAL;
 		}
 	}
-	public partial class MenuDetailBLL : BaseBLL<MenuDetail>
+	public partial class RoleToMenusBLL : BaseBLL<RoleToMenus>
 	{
 		public override void SetCurrentDAL()
 		{
-			CurrentDAL = DbSession.MenuDetailDAL;
+			CurrentDAL = DbSession.RoleToMenusDAL;
 		}
 	}
-	public partial class MenuInfoBLL : BaseBLL<MenuInfo>
+	public partial class WF_MenuBLL : BaseBLL<WF_Menu>
 	{
 		public override void SetCurrentDAL()
 		{
-			CurrentDAL = DbSession.MenuInfoDAL;
+			CurrentDAL = DbSession.WF_MenuDAL;
 		}
 	}
-	public partial class UserInfoBLL : BaseBLL<UserInfo>
+	public partial class WF_RoleBLL : BaseBLL<WF_Role>
 	{
 		public override void SetCurrentDAL()
 		{
-			CurrentDAL = DbSession.UserInfoDAL;
+			CurrentDAL = DbSession.WF_RoleDAL;
+		}
+	}
+	public partial class WF_UserBLL : BaseBLL<WF_User>
+	{
+		public override void SetCurrentDAL()
+		{
+			CurrentDAL = DbSession.WF_UserDAL;
 		}
 	}
 
